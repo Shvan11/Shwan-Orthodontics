@@ -9,10 +9,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
+        primary: {
+          light: '#3b82f6',
+          DEFAULT: '#2563eb',
+          dark: '#1d4ed8',
+        },
+        secondary: {
+          light: '#34d399',
+          DEFAULT: '#10b981',
+          dark: '#059669',
+        }
+      }
+    }
   },
   plugins: [],
 } satisfies Config;

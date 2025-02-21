@@ -1,0 +1,62 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "faq": "FAQ",
+    "gallery": "Gallery",
+    "services":"Services"
+  },
+  "pages": {
+    "home": {
+      "title": "Welcome to Shwan Orthodontics",
+      "description": "At Shwan Orthodontics, we’re dedicated to providing top-quality orthodontic care in Iraq.",
+      "missionTitle": "Our Mission",
+      "mission": "Help our patients achieve their perfect smiles through cutting-edge technology and expert treatment.",
+      "contactTitle": "Contact Us",
+      "contactInfo": "Email us at contact@shwanorthodontics.com or call us at +964-XXX-XXX-XXXX."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "email": "Email: shwan.elias@uod.ac",
+      "phone": "Phone: +964-750-810-8833",
+      "address": "Address: KRO Street, Duhok, Kurdistan Region / Iraq",
+      "form": {
+        "name": "Your Name",
+        "email": "Your Email",
+        "message": "Your Message",
+        "submit": "Send"
+      }
+    },
+    "about": {
+      "title": "About Shwan Orthodontics",
+      "mission": "Shwan Orthodontics is dedicated to providing top-tier orthodontic care in Iraq. Our mission is to help patients achieve their perfect smiles through cutting-edge technology and expert treatment.",
+      
+      "team": "Meet Our Team",
+      "team_info": "Led by Dr. Shwan, our team is committed to excellence in orthodontic care."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "questions": [
+        { "question": "What is orthodontics?", "answer": "Orthodontics is a branch of dentistry that deals with correcting teeth and jaw alignment." },
+        { "question": "When should my child see an orthodontist?", "answer": "It is recommended that children see an orthodontist by age 7 to identify any potential issues early." },
+        { "question": "Do braces hurt?", "answer": "There might be some discomfort when braces are first applied or adjusted, but this usually goes away after a few days." },
+        { "question": "What are clear aligners?", "answer": "Clear aligners are transparent, removable orthodontic devices used to straighten teeth." },
+        { "question": "How long does orthodontic treatment take?", "answer": "The duration of treatment varies depending on the individual case but typically ranges from 1 to 3 years." },
+        { "question": "Can adults get braces?", "answer": "Yes, orthodontic treatment is effective for both children and adults." },
+        { "question": "How often do I need to visit the orthodontist during treatment?", "answer": "Usually every 4-8 weeks, depending on the treatment plan." }
+      ]
+    },
+    "gallery": {
+      "title": "Gallery"
+    },
+    "services":{
+      "title":"Our Services",
+      "services_list": [
+        "Braces & Aligners",
+        "Teeth Whitening",
+        "Retainers"
+      ]
+    }
+  }
+}

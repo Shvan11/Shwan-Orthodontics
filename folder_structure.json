@@ -1,0 +1,116 @@
+{
+  "name": "src",
+  "type": "folder",
+  "children": [
+    {
+      "name": "app",
+      "type": "folder",
+      "children": [
+        {
+          "name": "layout.tsx",
+          "type": "file"
+        },
+        {
+          "name": "[locale]",
+          "type": "folder",
+          "children": [
+            {
+              "name": "about",
+              "type": "folder",
+              "children": [
+                {
+                  "name": "page.tsx",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "contact",
+              "type": "folder",
+              "children": [
+                {
+                  "name": "page.tsx",
+                  "type": "file"
+                }
+              ]
+            },
+            {
+              "name": "page.tsx",
+              "type": "file"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "components",
+      "type": "folder",
+      "children": [
+        {
+          "name": "Footer.tsx",
+          "type": "file"
+        },
+        {
+          "name": "LanguageSwitcher.tsx",
+          "type": "file"
+        },
+        {
+          "name": "MenuItems.tsx",
+          "type": "file"
+        },
+        {
+          "name": "Navbar.tsx",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "name": "context",
+      "type": "folder",
+      "children": [
+        {
+          "name": "LocaleContext.tsx",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "name": "lib",
+      "type": "folder",
+      "children": [
+        {
+          "name": "getDictionary.ts",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "name": "locales",
+      "type": "folder",
+      "children": [
+        {
+          "name": "ar.json",
+          "type": "file"
+        },
+        {
+          "name": "en.json",
+          "type": "file"
+        }
+      ]
+    },
+    {
+      "name": "middleware.ts",
+      "type": "file"
+    },
+    {
+      "name": "styles",
+      "type": "folder",
+      "children": [
+        {
+          "name": "globals.css",
+          "type": "file"
+        }
+      ]
+    }
+  ]
+}

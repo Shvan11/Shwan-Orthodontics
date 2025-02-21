@@ -1,0 +1,13 @@
+/* src/styles/globals.css */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+/* Add scroll margin for section anchors to account for fixed navbar */
+section[id] {
+  scroll-margin-top: 6.5rem; /* 80px - adjust based on your navbar height */
+}

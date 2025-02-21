@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+_tree.js
+src/components/GalleryCarousel.tsx.horizontal
 
 # debug
 npm-debug.log*
