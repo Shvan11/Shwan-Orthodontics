@@ -6,13 +6,15 @@ import Image from 'next/image';
 import logo from '@public/images/_logo.png';
 import LogoWatermark from './LogoWatermark';
 import { GalleryCase } from '@/types/gallery';
+import { Dictionary } from '@/types/dictionary';
 
 interface MobileGalleryProps {
+  t: Dictionary;
   isRTL: boolean;
   galleryData: GalleryCase[];
 }
 
-export default function MobileGalleryCarousel({ isRTL, galleryData }: MobileGalleryProps) {
+export default function MobileGalleryCarousel({t, isRTL, galleryData }: MobileGalleryProps) {
   // State for tracking which case and which photo within that case
   const [activeCaseIndex, setActiveCaseIndex] = useState(0);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
@@ -152,7 +154,7 @@ export default function MobileGalleryCarousel({ isRTL, galleryData }: MobileGall
         {/* Case title and description */}
         <div className="bg-gray-100 p-3">
           <h3 className="font-medium text-center text-lg">
-            Case {activeCase.id}: {activeCase.title}
+            {t.pages.gallery.casePrefix} {activeCase.id}: {activeCase.title}
           </h3>
           {activePhoto.description ? (
             <p className="text-center text-sm mt-1">

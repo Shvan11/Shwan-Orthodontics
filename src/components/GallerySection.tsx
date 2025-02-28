@@ -40,7 +40,7 @@
    
          {/* Mobile view - Swipeable carousel */}
          <div className="md:hidden">
-           <MobileGalleryCarousel isRTL={isRTL} galleryData={galleryData} />
+           <MobileGalleryCarousel t={t} isRTL={isRTL} galleryData={galleryData}  />
          </div>
    
          {/* Desktop view - Grid layout */}
