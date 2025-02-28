@@ -22,7 +22,6 @@ export default function MobileGalleryCarousel({ isRTL, galleryData }: MobileGall
   
   // Get active case and photo
   const activeCase = galleryData[activeCaseIndex];
-  const totalCases = galleryData.length;
   const totalPhotosInCurrentCase = activeCase.photos.length;
   
   // Flatten all photos for pagination (all photos from all cases)
@@ -35,7 +34,7 @@ export default function MobileGalleryCarousel({ isRTL, galleryData }: MobileGall
       photo: {
         before: string;
         after: string;
-        description: string;
+        description?: string;
       };
     }[] = [];
     
