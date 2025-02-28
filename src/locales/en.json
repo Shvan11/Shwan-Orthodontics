@@ -51,6 +51,7 @@
     },
     "gallery": {
       "title": "Gallery",
+      "casePrefix": "Case",
       "cases": [
         {
           "id": 1,
@@ -95,7 +96,6 @@
     },
     "services":{
       "title":"Our Services",
-      "casePrefix": "Case",
       "services_list": [
         "Braces & Aligners",
         "Teeth Whitening",

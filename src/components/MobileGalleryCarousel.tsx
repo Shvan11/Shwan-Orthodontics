@@ -186,13 +186,13 @@ export default function MobileGalleryCarousel({t, isRTL, galleryData }: MobileGa
         </div>
         
         {/* Logo in the middle */}
-        <div className="flex justify-center items-center py-3 bg-white">
+        <div className="flex justify-center items-center py-0 h-8 bg-gray-700">
           <Image 
             src={logo} 
             alt="Shwan Orthodontics Logo" 
             width={80} 
             height={30} 
-            className="h-auto"
+            className="h-6 object-contain"
           />
         </div>
         
