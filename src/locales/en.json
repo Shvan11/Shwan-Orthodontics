@@ -55,40 +55,40 @@
       "cases": [
         {
           "id": 1,
-          "title": "Class II Malocclusion",
+          "title": "Class II Malocclusion (protrusion of upper teeth)",
           "photos": [
             {
               "description": "Front view"
             },
             {
-              "description": "Side view"
+              "description": "Face Side view"
             }
           ]
         },
         {
           "id": 2,
-          "title": "Anterior Crossbite",
+          "title": "Crowding",
           "photos": [
             {
               "description": "Front view"
             },
             {
-              "description": "Side view"
+              "description": "Face Front view"
             },
             {
-              "description": "Occlusal view"
+              "description": "Lower Occlusal view"
             }
           ]
         },
         {
           "id": 3,
-          "title": "Crowding",
+          "title": "Open Bite",
           "photos": [
             {
-              "description": "Upper arch"
+              "description": "Front view"
             },
             {
-              "description": "Lower arch"
+              "description": "Face Front view"
             }
           ]
         }
