@@ -5,7 +5,7 @@
     "contact": "Contact",
     "faq": "FAQ",
     "gallery": "Gallery",
-    "services":"Services"
+    "services": "Services"
   },
   "pages": {
     "home": {
@@ -27,26 +27,47 @@
         "message": "Your Message",
         "submit": "Send"
       },
-      "socialHeading":"Follow us on social media to stay connected!",
-      "mapsHeading":"Find us on the map below:"
+      "socialHeading": "Follow us on social media to stay connected!",
+      "mapsHeading": "Find us on the map below:"
     },
     "about": {
       "title": "About Shwan Orthodontics",
       "mission": "Shwan Orthodontics is dedicated to providing top-tier orthodontic care in Iraq. Our mission is to help patients achieve their perfect smiles through cutting-edge technology and expert treatment.",
-      
+
       "team": "Meet Our Team",
       "team_info": "Led by Dr. Shwan, our team is committed to excellence in orthodontic care."
     },
     "faq": {
       "title": "Frequently Asked Questions",
       "questions": [
-        { "question": "What is orthodontics?", "answer": "Orthodontics is a branch of dentistry that deals with correcting teeth and jaw alignment." },
-        { "question": "When should my child see an orthodontist?", "answer": "It is recommended that children see an orthodontist by age 7 to identify any potential issues early." },
-        { "question": "Do braces hurt?", "answer": "There might be some discomfort when braces are first applied or adjusted, but this usually goes away after a few days." },
-        { "question": "What are clear aligners?", "answer": "Clear aligners are transparent, removable orthodontic devices used to straighten teeth." },
-        { "question": "How long does orthodontic treatment take?", "answer": "The duration of treatment varies depending on the individual case but typically ranges from 1 to 3 years." },
-        { "question": "Can adults get braces?", "answer": "Yes, orthodontic treatment is effective for both children and adults." },
-        { "question": "How often do I need to visit the orthodontist during treatment?", "answer": "Usually every 4-8 weeks, depending on the treatment plan." }
+        {
+          "question": "What is orthodontics?",
+          "answer": "Orthodontics is a branch of dentistry that deals with correcting teeth and jaw alignment."
+        },
+        {
+          "question": "When should my child see an orthodontist?",
+          "answer": "It is recommended that children see an orthodontist by age 7 to identify any potential issues early."
+        },
+        {
+          "question": "Do braces hurt?",
+          "answer": "There might be some discomfort when braces are first applied or adjusted, but this usually goes away after a few days."
+        },
+        {
+          "question": "What are clear aligners?",
+          "answer": "Clear aligners are transparent, removable orthodontic devices used to straighten teeth."
+        },
+        {
+          "question": "How long does orthodontic treatment take?",
+          "answer": "The duration of treatment varies depending on the individual case but typically ranges from 1 to 3 years."
+        },
+        {
+          "question": "Can adults get braces?",
+          "answer": "Yes, orthodontic treatment is effective for both children and adults."
+        },
+        {
+          "question": "How often do I need to visit the orthodontist during treatment?",
+          "answer": "Usually every 4-8 weeks, depending on the treatment plan."
+        }
       ]
     },
     "gallery": {
@@ -94,12 +115,21 @@
         }
       ]
     },
-    "services":{
-      "title":"Our Services",
+    "services": {
+      "title": "Our Services",
       "services_list": [
-        "Braces & Aligners",
-        "Teeth Whitening",
-        "Retainers"
+        "Braces",
+        "Aligners",
+        "CBCT Imaging",
+        "Intra-oral Scanning",
+        "Teeth Whitening"
+      ],
+      "descriptions": [
+        "At Shwan Orthodontics, we believe in the power of braces—because old is gold! Braces remain one of the most reliable and effective ways to straighten teeth, offering precise results for all cases. We provide both traditional metal and discreet ceramic braces, ensuring options that suit your needs. With modern advancements, today’s braces are more comfortable and efficient, delivering proven, long-lasting results for a perfect smile.",
+        "At Shwan Orthodontics, we take orthodontic treatment to the next level with our in-house clear aligners, custom-made for a precise, comfortable, and efficient teeth-straightening experience. Unlike generic aligners, our advanced 3D scanning and in-house manufacturing process allow us to design and produce aligners that are perfectly tailored to each patient’s unique smile. This means faster treatment times, greater control over results, and more affordable options—all while ensuring discreet and comfortable orthodontic care. Get the perfect smile you deserve with our high-quality, customized aligners, available exclusively at Shwan Orthodontics!",
+        "At Shwan Orthodontics, we are committed to providing the highest level of precision and care using the only CS 9600 CBCT machine in Duhok city—one of the world's most advanced 3D imaging technologies. This cutting-edge system allows for ultra-high-resolution imaging, giving us a complete and detailed view of teeth, roots, jaw structure, and airways. In orthodontics, this means more accurate diagnoses, improved treatment planning, and better outcomes, especially for cases involving impacted teeth, skeletal discrepancies, and airway analysis. With reduced radiation exposure and exceptional image clarity, our CBCT machine ensures safer, faster, and more effective orthodontic care. Additionally, for dental implants, it provides precise bone assessment to enhance treatment success. Experience the future of orthodontics with the most advanced CBCT technology—exclusively at Shwan Orthodontics!",
+        "​At Shwan Orthodontics, we enhance patient comfort and treatment accuracy by utilizing one of the most advanced intraoral scanners available—the TRIOS 5 Wireless. This state-of-the-art technology captures precise digital impressions, eliminating the need for traditional, often uncomfortable, impression materials. The result is a more comfortable experience and enhanced precision in your treatment plan.",
+        "At Shwan Orthodontics, we offer professional teeth whitening solutions to help you achieve a brighter, more confident smile. Choose between our home bleaching kit, which can be conveniently used with your clear orthodontic retainer after treatment, or our in-office Zoom whitening for instant, dramatic results. Whether you prefer the gradual whitening of home bleaching or the fast, effective power of Zoom's advanced light technology, we ensure a safe, effective, and long-lasting whitening experience tailored to your needs!"
       ]
     }
   }

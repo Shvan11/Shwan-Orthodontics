@@ -61,6 +61,7 @@ export interface Dictionary {
     services: {
       title: string;
       services_list: string[];
+      descriptions?: string[]; // Service descriptions
     }
   };
 }

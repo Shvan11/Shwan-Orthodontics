@@ -1,4 +1,5 @@
 /* src/styles/globals.css */
+@import 'animations.css';
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -7,7 +8,13 @@
 html {
   scroll-behavior: smooth;
 }
+
 /* Add scroll margin for section anchors to account for fixed navbar */
 section[id] {
-  scroll-margin-top: 6.5rem; /* 80px - adjust based on your navbar height */
+  scroll-margin-top: 6.5rem; /* 104px - adjust based on your navbar height */
+}
+
+/* Add scroll margin for service cards specifically */
+div[id^="card-container-"] {
+  scroll-margin-top: 6rem; /* 96px - slightly less than sections */
 }

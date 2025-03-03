@@ -1,0 +1,132 @@
+/* src/styles/animations.css */
+
+/* Fade In animation */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade Out animation */
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  
+  /* Expand animation */
+  @keyframes expand {
+    from {
+      max-height: 0;
+      opacity: 0;
+    }
+    to {
+      max-height: 2000px; /* High enough to accommodate content */
+      opacity: 1;
+    }
+  }
+  
+  /* Collapse animation */
+  @keyframes collapse {
+    from {
+      max-height: 2000px;
+      opacity: 1;
+    }
+    to {
+      max-height: 0;
+      opacity: 0;
+    }
+  }
+  
+  /* Shimmer effect for image hover */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+  
+  /* Utility classes for animations */
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease forwards;
+  }
+  
+  .animate-fadeOut {
+    animation: fadeOut 0.4s ease forwards;
+  }
+  
+  .animate-expand {
+    animation: expand 0.5s ease-out forwards;
+    overflow: hidden;
+  }
+  
+  .animate-collapse {
+    animation: collapse 0.4s ease-in forwards;
+    overflow: hidden;
+  }
+  
+  /* Image shimmer effect on hover */
+  .shimmer-effect {
+    position: relative;
+  }
+  
+  .shimmer-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .shimmer-effect:hover::after {
+    opacity: 1;
+  }
+  
+  /* Smooth all transitions */
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+  
+  /* Add responsive modifications */
+  @media (max-width: 640px) {
+    .service-card {
+      /* Mobile-specific styling */
+      margin-bottom: 1rem;
+    }
+    
+    .animate-expand {
+      animation-duration: 0.4s;
+    }
+  }
+  
+  @media (min-width: 641px) and (max-width: 1024px) {
+    /* Tablet-specific styling */
+    .service-detail-images {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
