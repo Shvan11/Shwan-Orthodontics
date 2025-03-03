@@ -83,18 +83,30 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
     [isSmallScreen, isMediumScreen]
   );
 
-  // Using useCallback for better performance
   const handleToggle = useCallback((id: string) => {
     setExpandedServiceId((prevId) => (prevId === id ? null : id));
-    
-    // Add smooth scroll to the expanded content on mobile
+  
     if (isSmallScreen) {
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const element = document.getElementById(`expanded-${id}`);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const navbar = document.querySelector("nav"); // Select the navbar
+        
+        if (element && navbar) {
+          const observer = new ResizeObserver(() => {
+            const navbarHeight = navbar.clientHeight || 0; // Get navbar height
+            const elementTop = element.getBoundingClientRect().top + window.scrollY;
+            
+            window.scrollTo({
+              top: elementTop - navbarHeight - 10, // Adjust for navbar height
+              behavior: "smooth"
+            });
+  
+            observer.disconnect(); // Stop observing once done
+          });
+  
+          observer.observe(element);
         }
-      }, 100);
+      });
     }
   }, [isSmallScreen]);
   
