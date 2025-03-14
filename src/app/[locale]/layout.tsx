@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import { dir } from "i18next";
 import { LocaleProvider } from "@/context/LocaleContext";
 import HTMLDirectionManager from "@/components/HTMLDirectionManager";
-
+import { Analytics } from "@vercel/analytics/react"
 export default async function RootLayout({
   children,
   params,
@@ -33,6 +33,7 @@ export default async function RootLayout({
           <Navbar />
           <main className="flex-grow container mx-auto p-4">
             {children}
+            <Analytics />
           </main>
           <Footer />
         </LocaleProvider>

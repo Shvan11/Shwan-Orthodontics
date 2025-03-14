@@ -9,6 +9,7 @@
     "dev": "next dev --turbopack"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "framer-motion": "^12.4.7",
     "i18next": "^24.2.2",
     "i18next-browser-languagedetector": "^8.0.3",
