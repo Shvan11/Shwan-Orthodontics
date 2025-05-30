@@ -225,6 +225,10 @@ export default function AdminPage() {
     setData({
       ...data,
       seo: {
+        title: data.seo?.title || '',
+        description: data.seo?.description || '',
+        keywords: data.seo?.keywords || '',
+        siteName: data.seo?.siteName || '',
         ...data.seo,
         [field]: value
       }

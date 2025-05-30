@@ -12,14 +12,14 @@ const LocaleContext = createContext<LocaleContextType | undefined>(undefined);
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const detectedLocale = pathname.startsWith("/ar") ? "ar" : "en";
+  const detectedLocale = pathname?.startsWith("/ar") ? "ar" : "en";
   const [locale, setLocale] = useState(detectedLocale);
   
   // Memoize the locale change handler to prevent recreation on every render
   const handleChangeLocale = useCallback((newLocale: string) => {
     if (newLocale !== locale) {
       setLocale(newLocale);
-      const newPath = `/${newLocale}${pathname.replace(/^\/(en|ar)/, "")}`;
+      const newPath = `/${newLocale}${pathname?.replace(/^\/(en|ar)/, "") || ""}`;
       router.push(newPath);
     }
   }, [locale, pathname, router]);

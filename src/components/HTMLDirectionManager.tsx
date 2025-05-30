@@ -21,7 +21,7 @@ export default function HTMLDirectionManager({ initialLocale }: { initialLocale:
   // Handle changes in locale on client-side navigation
   useEffect(() => {
     const detectLocaleFromPath = () => {
-      const urlLocale = pathname.startsWith("/ar") ? "ar" : "en";
+      const urlLocale = pathname?.startsWith("/ar") ? "ar" : "en";
       
       // Only update if the locale has changed
       if (urlLocale !== lastLocaleRef.current) {

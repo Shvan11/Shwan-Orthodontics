@@ -319,6 +319,10 @@ export default function AdminSupabasePage() {
     setData({
       ...data,
       seo: {
+        title: data.seo?.title || '',
+        description: data.seo?.description || '',
+        keywords: data.seo?.keywords || '',
+        siteName: data.seo?.siteName || '',
         ...data.seo,
         [field]: value
       }
@@ -1406,7 +1410,7 @@ export default function AdminSupabasePage() {
             <h3 className="font-medium text-blue-900 mb-2">💡 Tips</h3>
             <ul className="text-sm text-blue-800 space-y-1">
               <li>• Always fill both English and Arabic versions</li>
-              <li>• Click "Save to Supabase" after making edits</li>
+              <li>• Click &quot;Save to Supabase&quot; after making edits</li>
               <li>• Changes are saved to the cloud and sync across devices</li>
               <li>• Use auto-save to automatically save your changes</li>
               <li>• Real-time updates notify you when others make changes</li>

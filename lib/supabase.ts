@@ -81,8 +81,8 @@ export class ContentManager {
       } else if (row.section === 'navbar') {
         fullContent.navbar = row.data
       } else {
-        if (!fullContent.pages) fullContent.pages = {}
-        fullContent.pages[row.section] = row.data
+        if (!fullContent.pages) fullContent.pages = {} as Record<string, unknown>
+        ;(fullContent.pages as Record<string, unknown>)[row.section] = row.data
       }
     })
 

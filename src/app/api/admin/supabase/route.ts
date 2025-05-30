@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ContentManager } from '../../../../../../lib/supabase';
+import { ContentManager } from '../../../../../lib/supabase';
 
 // GET - Read content from Supabase
 export async function GET(request: NextRequest) {
@@ -112,7 +112,7 @@ export async function PUT(request: NextRequest) {
     // Save pages data
     if (data.pages) {
       for (const [section, sectionData] of Object.entries(data.pages)) {
-        await ContentManager.saveContent(locale, section, sectionData);
+        await ContentManager.saveContent(locale, section, sectionData as Record<string, unknown>);
       }
     }
     
