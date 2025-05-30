@@ -839,7 +839,7 @@ export default function AdminSupabasePage() {
                       You can manage service images in two ways:
                     </p>
                     <ul className="text-blue-700 text-sm space-y-1">
-                      <li>• <strong>Auto-Load:</strong> Click "🚀 Auto-Load Images" to automatically load your existing images</li>
+                      <li>• <strong>Auto-Load:</strong> Click &quot;🚀 Auto-Load Images&quot; to automatically load your existing images</li>
                       <li>• <strong>Manual:</strong> Enter image paths manually in the fields below</li>
                       <li>• <strong>Live Preview:</strong> Images show preview thumbnails when paths are correct</li>
                     </ul>
