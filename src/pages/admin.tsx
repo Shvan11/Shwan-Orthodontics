@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Dictionary } from '@/types/dictionary';
+import AdminAuth from '@/components/AdminAuth';
 
 export default function AdminPage() {
   const [enData, setEnData] = useState<Dictionary | null>(null);
@@ -553,7 +554,8 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <AdminAuth>
+      <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4">
         <div className="bg-white rounded-lg shadow-lg p-6">
           <div className="flex justify-between items-center mb-6">
@@ -1342,5 +1344,6 @@ export default function AdminPage() {
         </div>
       </div>
     </div>
+    </AdminAuth>
   );
 }
