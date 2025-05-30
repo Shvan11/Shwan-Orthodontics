@@ -94,7 +94,7 @@ export default function AdminSupabasePage() {
   }, [enData, arData]);
 
   // Update functions for different content types
-  const updateService = (index: number, locale: 'en' | 'ar', field: 'title' | 'description', value: string) => {
+  const updateService = (index: number, locale: 'en' | 'ar', field: 'title' | 'description' | 'image' | 'detail_images', value: string) => {
     const data = locale === 'en' ? enData : arData;
     const setData = locale === 'en' ? setEnData : setArData;
     
@@ -102,11 +102,18 @@ export default function AdminSupabasePage() {
 
     const updatedServices = [...(data.pages?.services?.services_list || [])];
     const updatedDescriptions = [...(data.pages?.services?.descriptions || [])];
+    const updatedImages = [...(data.pages?.services?.images || [])];
+    const updatedDetailImages = [...(data.pages?.services?.detail_images || [])];
 
     if (field === 'title') {
       updatedServices[index] = value;
-    } else {
+    } else if (field === 'description') {
       updatedDescriptions[index] = value;
+    } else if (field === 'image') {
+      updatedImages[index] = value;
+    } else if (field === 'detail_images') {
+      // Convert comma-separated string to array
+      updatedDetailImages[index] = value.split(',').map(url => url.trim()).filter(url => url);
     }
 
     setData({
@@ -116,7 +123,9 @@ export default function AdminSupabasePage() {
         services: {
           ...data.pages?.services,
           services_list: updatedServices,
-          descriptions: updatedDescriptions
+          descriptions: updatedDescriptions,
+          images: updatedImages,
+          detail_images: updatedDetailImages
         }
       }
     });
@@ -217,6 +226,8 @@ export default function AdminSupabasePage() {
 
     const newService = "New Service";
     const newDescription = "Service description";
+    const newImage = "/images/service-placeholder.jpg";
+    const newDetailImages: string[] = [];
     const newArService = "خدمة جديدة";
     const newArDescription = "وصف الخدمة";
 
@@ -227,7 +238,9 @@ export default function AdminSupabasePage() {
         services: {
           ...enData.pages?.services,
           services_list: [...(enData.pages?.services?.services_list || []), newService],
-          descriptions: [...(enData.pages?.services?.descriptions || []), newDescription]
+          descriptions: [...(enData.pages?.services?.descriptions || []), newDescription],
+          images: [...(enData.pages?.services?.images || []), newImage],
+          detail_images: [...(enData.pages?.services?.detail_images || []), newDetailImages]
         }
       }
     });
@@ -239,7 +252,9 @@ export default function AdminSupabasePage() {
         services: {
           ...arData.pages?.services,
           services_list: [...(arData.pages?.services?.services_list || []), newArService],
-          descriptions: [...(arData.pages?.services?.descriptions || []), newArDescription]
+          descriptions: [...(arData.pages?.services?.descriptions || []), newArDescription],
+          images: [...(arData.pages?.services?.images || []), newImage],
+          detail_images: [...(arData.pages?.services?.detail_images || []), newDetailImages]
         }
       }
     });
@@ -256,7 +271,9 @@ export default function AdminSupabasePage() {
         services: {
           ...enData.pages?.services,
           services_list: (enData.pages?.services?.services_list || []).filter((_, i) => i !== index),
-          descriptions: (enData.pages?.services?.descriptions || []).filter((_, i) => i !== index)
+          descriptions: (enData.pages?.services?.descriptions || []).filter((_, i) => i !== index),
+          images: (enData.pages?.services?.images || []).filter((_, i) => i !== index),
+          detail_images: (enData.pages?.services?.detail_images || []).filter((_, i) => i !== index)
         }
       }
     });
@@ -268,7 +285,9 @@ export default function AdminSupabasePage() {
         services: {
           ...arData.pages?.services,
           services_list: (arData.pages?.services?.services_list || []).filter((_, i) => i !== index),
-          descriptions: (arData.pages?.services?.descriptions || []).filter((_, i) => i !== index)
+          descriptions: (arData.pages?.services?.descriptions || []).filter((_, i) => i !== index),
+          images: (arData.pages?.services?.images || []).filter((_, i) => i !== index),
+          detail_images: (arData.pages?.services?.detail_images || []).filter((_, i) => i !== index)
         }
       }
     });
@@ -653,6 +672,30 @@ export default function AdminSupabasePage() {
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                           </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                              Main Image URL
+                            </label>
+                            <input
+                              type="text"
+                              value={enData.pages?.services?.images?.[index] || ''}
+                              onChange={(e) => updateService(index, 'en', 'image', e.target.value)}
+                              placeholder="/images/service-image.jpg"
+                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                              Detail Images (comma-separated URLs)
+                            </label>
+                            <textarea
+                              value={enData.pages?.services?.detail_images?.[index]?.join(', ') || ''}
+                              onChange={(e) => updateService(index, 'en', 'detail_images', e.target.value)}
+                              rows={2}
+                              placeholder="/images/detail1.jpg, /images/detail2.jpg"
+                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
                         </div>
                       </div>
 
@@ -680,6 +723,32 @@ export default function AdminSupabasePage() {
                               value={arData.pages?.services?.descriptions?.[index] || ''}
                               onChange={(e) => updateService(index, 'ar', 'description', e.target.value)}
                               rows={4}
+                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              dir="rtl"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                              رابط الصورة الرئيسية
+                            </label>
+                            <input
+                              type="text"
+                              value={arData.pages?.services?.images?.[index] || ''}
+                              onChange={(e) => updateService(index, 'ar', 'image', e.target.value)}
+                              placeholder="/images/service-image.jpg"
+                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              dir="rtl"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                              صور التفاصيل (مفصولة بفواصل)
+                            </label>
+                            <textarea
+                              value={arData.pages?.services?.detail_images?.[index]?.join(', ') || ''}
+                              onChange={(e) => updateService(index, 'ar', 'detail_images', e.target.value)}
+                              rows={2}
+                              placeholder="/images/detail1.jpg, /images/detail2.jpg"
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                               dir="rtl"
                             />

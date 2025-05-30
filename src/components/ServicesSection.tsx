@@ -68,6 +68,14 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
     () => t.pages.services.descriptions ?? [],
     [t.pages.services.descriptions]
   );
+  const serviceImages = useMemo(
+    () => t.pages.services.images ?? [],
+    [t.pages.services.images]
+  );
+  const serviceDetailImages = useMemo(
+    () => t.pages.services.detail_images ?? [],
+    [t.pages.services.detail_images]
+  );
 
   const numColumns = useMemo(
     () => (isSmallScreen ? 1 : isMediumScreen ? 2 : 3),
@@ -156,13 +164,18 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
     const serviceIndex = Object.keys(servicesData).indexOf(expandedServiceId);
     if (serviceIndex === -1) return null;
 
+    // Use dynamic detail images if available, otherwise fallback to hardcoded
+    const detailImages = serviceDetailImages[serviceIndex] && serviceDetailImages[serviceIndex].length > 0
+      ? serviceDetailImages[serviceIndex]
+      : servicesData[expandedServiceId]?.detailImages ?? [];
+
     return {
       id: expandedServiceId,
       title: services[serviceIndex] ?? "Unknown Service",
       description: descriptions[serviceIndex] ?? "",
-      images: servicesData[expandedServiceId]?.detailImages ?? [],
+      images: detailImages,
     };
-  }, [expandedServiceId, services, descriptions]);
+  }, [expandedServiceId, services, descriptions, serviceDetailImages]);
 
   return (
     <section id="services" className="mt-12 mx-auto px-4 sm:px-6 max-w-7xl">
@@ -185,11 +198,16 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
                 Object.keys(servicesData).indexOf(serviceKey);
               const isActive = expandedServiceId === serviceData.id;
 
+              // Use dynamic main image if available, otherwise fallback to hardcoded
+              const mainImage = serviceImages[serviceIndex] && serviceImages[serviceIndex].trim()
+                ? serviceImages[serviceIndex]
+                : serviceData.image;
+
               return (
                 <div key={serviceData.id}>
                   <ServiceCard
                     id={serviceData.id}
-                    image={serviceData.image}
+                    image={mainImage}
                     title={services[serviceIndex]}
                     isRTL={isRTL}
                     isActive={isActive}

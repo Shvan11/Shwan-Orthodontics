@@ -68,6 +68,8 @@ export interface Dictionary {
       title: string;
       services_list: string[];
       descriptions?: string[]; // Service descriptions
+      images?: string[]; // Main service images
+      detail_images?: string[][]; // Detail images for each service (array of arrays)
     }
   };
 }
