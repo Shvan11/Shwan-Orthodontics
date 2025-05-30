@@ -1,6 +1,5 @@
 // src/app/[locale]/layout.tsx
 
-import "@/styles/globals.css";
 import React from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -90,61 +89,59 @@ export default async function RootLayout({
  const detectedLang = resolvedParams.locale;
 
   return (
-    <html lang={detectedLang || ''} dir={detectedLang ? dir(detectedLang) : 'ltr'}>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "DentalClinic",
-              "name": "Shwan Orthodontics",
-              "description": "Professional orthodontic care in Duhok, Kurdistan Region, Iraq",
-              "url": "https://shwanorthodontics.com",
-              "telephone": "+964-750-810-8833",
-              "email": "shwan.elias@uod.ac",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "KRO Street",
-                "addressLocality": "Duhok",
-                "addressRegion": "Kurdistan Region",
-                "addressCountry": "Iraq"
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "DentalClinic",
+            "name": "Shwan Orthodontics",
+            "description": "Professional orthodontic care in Duhok, Kurdistan Region, Iraq",
+            "url": "https://shwanorthodontics.com",
+            "telephone": "+964-750-810-8833",
+            "email": "shwan.elias@uod.ac",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "KRO Street",
+              "addressLocality": "Duhok",
+              "addressRegion": "Kurdistan Region",
+              "addressCountry": "Iraq"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "36.8475",
+              "longitude": "42.9638"
+            },
+            "openingHours": "Mo-Sa 09:00-18:00",
+            "medicalSpecialty": "Orthodontics",
+            "availableService": [
+              {
+                "@type": "MedicalProcedure",
+                "name": "Orthodontic Braces"
               },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "36.8475",
-                "longitude": "42.9638"
+              {
+                "@type": "MedicalProcedure",
+                "name": "Clear Aligners"
               },
-              "openingHours": "Mo-Sa 09:00-18:00",
-              "medicalSpecialty": "Orthodontics",
-              "availableService": [
-                {
-                  "@type": "MedicalProcedure",
-                  "name": "Orthodontic Braces"
-                },
-                {
-                  "@type": "MedicalProcedure",
-                  "name": "Clear Aligners"
-                },
-                {
-                  "@type": "MedicalProcedure",
-                  "name": "Teeth Whitening"
-                },
-                {
-                  "@type": "MedicalProcedure",
-                  "name": "CBCT Scanning"
-                }
-              ],
-              "physician": {
-                "@type": "Person",
-                "name": "Dr. Shwan Elias",
-                "jobTitle": "Orthodontist"
+              {
+                "@type": "MedicalProcedure",
+                "name": "Teeth Whitening"
+              },
+              {
+                "@type": "MedicalProcedure",
+                "name": "CBCT Scanning"
               }
-            })
-          }}
-        />
-      </head>
-      <body className="min-h-screen flex flex-col">
+            ],
+            "physician": {
+              "@type": "Person",
+              "name": "Dr. Shwan Elias",
+              "jobTitle": "Orthodontist"
+            }
+          })
+        }}
+      />
+      <div className="min-h-screen flex flex-col" lang={detectedLang || ''} dir={detectedLang ? dir(detectedLang) : 'ltr'}>
         <ErrorBoundary>
           <LocaleProvider>
             <HTMLDirectionManager initialLocale={detectedLang || ''} />
@@ -156,7 +153,7 @@ export default async function RootLayout({
             <Footer />
           </LocaleProvider>
         </ErrorBoundary>
-      </body>
-    </html>
+      </div>
+    </>
   );
 }
