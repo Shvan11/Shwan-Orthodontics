@@ -820,23 +820,22 @@ export default function AdminSupabasePage() {
                   Detail Images: {enData.pages?.services?.detail_images?.length || 0}
                 </div>
                 <div className="mt-2 space-x-2">
-                  {(!enData.pages?.services?.images || (enData.pages?.services?.images?.length || 0) === 0) ? (
-                    <button
-                      onClick={initializeImageArrays}
-                      className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-xs"
-                    >
-                      🔧 Initialize Image Arrays (NEEDED)
-                    </button>
-                  ) : (
-                    <span className="text-green-600 text-xs">✅ Image arrays ready</span>
-                  )}
-                  
-                  {/* Always show button for testing */}
                   <button
                     onClick={initializeImageArrays}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs"
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-bold"
                   >
-                    🔄 Re-initialize Arrays (TEST)
+                    🔧 INITIALIZE IMAGE ARRAYS - CLICK ME!
+                  </button>
+                  <button
+                    onClick={() => {
+                      console.log('Button clicked!');
+                      console.log('enData:', enData);
+                      console.log('images array:', enData.pages?.services?.images);
+                      initializeImageArrays();
+                    }}
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded font-bold"
+                  >
+                    🔍 DEBUG & INITIALIZE
                   </button>
                 </div>
               </div>
