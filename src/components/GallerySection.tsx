@@ -101,7 +101,7 @@
                          />
                          <LogoWatermark opacity={0.35} position="center" size="medium" />
                          <div className="absolute bottom-0 left-0 bg-black bg-opacity-70 text-white px-3 py-1 z-20">
-                           Before
+                           After
                          </div>
                        </div>
                      </div>

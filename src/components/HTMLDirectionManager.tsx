@@ -13,7 +13,6 @@ export default function HTMLDirectionManager({ initialLocale }: { initialLocale:
     const setAttributes = (locale: string) => {
       document.documentElement.lang = locale;
       document.documentElement.dir = dir(locale);
-      console.log(`✅ Initial HTML attributes set: lang=${locale}, dir=${dir(locale)}`);
     };
 
     setAttributes(initialLocale);
@@ -30,7 +29,6 @@ export default function HTMLDirectionManager({ initialLocale }: { initialLocale:
 
         document.documentElement.lang = urlLocale;
         document.documentElement.dir = dir(urlLocale);
-        console.log(`🔄 Updated HTML attributes: lang=${urlLocale}, dir=${dir(urlLocale)}`);
       }
     };
 

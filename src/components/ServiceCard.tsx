@@ -11,14 +11,17 @@ interface ServiceCardProps {
   isRTL: boolean;
   isActive: boolean;
   onToggle: (id: string) => void;
+  priority?: boolean;
 }
 
 const ServiceCard = memo(({ 
   id, 
   image, 
   title, 
+  isRTL,
   isActive, 
-  onToggle 
+  onToggle,
+  priority = false
 }: ServiceCardProps) => {
   const cardVariants = {
     hover: { 
@@ -60,11 +63,11 @@ const ServiceCard = memo(({
               className={`w-full h-48 sm:h-52 lg:h-56 object-cover transition-transform duration-500 ${
                 isActive ? 'scale-105' : 'scale-100 hover:scale-105'
               }`}
-              loading="lazy"
+              priority={priority}
+              loading={priority ? undefined : "lazy"}
             />
           </div>
-          {/* <div className={`p-4 flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} justify-between items-center`}>  */}
-          <div className= "p-4 flex flex-row justify-between items-center"> 
+          <div className={`p-4 flex ${isRTL ? 'flex-row-reverse' : 'flex-row'} justify-between items-center`}> 
             <h3 className="text-xl font-semibold">{title}</h3>
             <motion.div 
               animate={{ rotate: isActive ? 45 : 0 }}

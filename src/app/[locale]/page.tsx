@@ -18,21 +18,9 @@ export default async function HomePage({
 }) {
   const resolvedParams = await params;
   const locale = resolvedParams.locale;
-    // Add error handling for getDictionary
-    let t;
-    try {
-      t = await getDictionary(locale);
-    } catch (error) {
-      console.error("❌ Failed to load dictionary:", error);
-      // Provide a fallback to avoid a broken page
-      t = {
-        pages: {
-          home: {
-            title: "Content unavailable",
-          }
-        }
-      };
-    }
+  
+  // Load dictionary with built-in error handling and fallbacks
+  const t = await getDictionary(locale);
   const isRTL = locale === "ar";
 
   return (

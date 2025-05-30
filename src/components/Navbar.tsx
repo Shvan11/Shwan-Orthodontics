@@ -124,6 +124,7 @@ function Navbar() {
         width={logo.width}
         height={logo.height}
         className="h-auto w-[120px] md:w-[150px]"
+        priority
       />
     </Link>
   );

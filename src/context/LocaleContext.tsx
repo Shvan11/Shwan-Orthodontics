@@ -20,7 +20,6 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     if (newLocale !== locale) {
       setLocale(newLocale);
       const newPath = `/${newLocale}${pathname.replace(/^\/(en|ar)/, "")}`;
-      console.log("🌐 URL Updated to:", newPath);
       router.push(newPath);
     }
   }, [locale, pathname, router]);

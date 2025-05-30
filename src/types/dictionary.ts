@@ -1,6 +1,12 @@
 // src/types/dictionary.ts
 
 export interface Dictionary {
+  seo?: {
+    title: string;
+    description: string;
+    keywords: string;
+    siteName: string;
+  };
   navbar: {
     home: string;
     about: string;

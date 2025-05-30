@@ -149,7 +149,7 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
         }
       });
     }
-  }, [animationComplete, expandedServiceId]);
+  }, [animationComplete, expandedServiceId, savedScrollPosition]);
 
   const expandedService = useMemo(() => {
     if (!expandedServiceId) return null;
@@ -194,6 +194,7 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
                     isRTL={isRTL}
                     isActive={isActive}
                     onToggle={() => handleToggle(serviceData.id)}
+                    priority={rowIndex === 0}
                   />
                 </div>
               );
