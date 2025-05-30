@@ -110,8 +110,16 @@ export default function AdminSupabasePage() {
     } else if (field === 'description') {
       updatedDescriptions[index] = value;
     } else if (field === 'image') {
+      // Ensure images array is long enough
+      while (updatedImages.length <= index) {
+        updatedImages.push('');
+      }
       updatedImages[index] = value;
     } else if (field === 'detail_images') {
+      // Ensure detail_images array is long enough
+      while (updatedDetailImages.length <= index) {
+        updatedDetailImages.push([]);
+      }
       // Convert comma-separated string to array
       updatedDetailImages[index] = value.split(',').map(url => url.trim()).filter(url => url);
     }
@@ -762,6 +770,17 @@ export default function AdminSupabasePage() {
                 </button>
               </div>
 
+              {/* Debug Info */}
+              <div className="mb-4 p-3 bg-blue-50 rounded-lg text-xs">
+                <div className="font-medium text-blue-800 mb-1">Debug Info:</div>
+                <div className="text-blue-700">
+                  Services: {enData.pages?.services?.services_list?.length || 0} | 
+                  Descriptions: {enData.pages?.services?.descriptions?.length || 0} | 
+                  Images: {enData.pages?.services?.images?.length || 0} | 
+                  Detail Images: {enData.pages?.services?.detail_images?.length || 0}
+                </div>
+              </div>
+
               <div className="space-y-6">
                 {(enData.pages?.services?.services_list || []).map((service: string, index: number) => (
                   <div key={index} className="border border-gray-200 rounded-lg p-4">
@@ -815,7 +834,7 @@ export default function AdminSupabasePage() {
                               placeholder="/images/service-image.jpg"
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            {enData.pages?.services?.images?.[index] && (
+                            {enData.pages?.services?.images?.[index] && enData.pages.services.images[index].trim() && (
                               <div className="mt-2">
                                 <img 
                                   src={enData.pages.services.images[index]} 
@@ -825,6 +844,7 @@ export default function AdminSupabasePage() {
                                     e.currentTarget.style.display = 'none';
                                   }}
                                 />
+                                <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
                               </div>
                             )}
                           </div>
@@ -883,7 +903,7 @@ export default function AdminSupabasePage() {
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                               dir="rtl"
                             />
-                            {arData.pages?.services?.images?.[index] && (
+                            {arData.pages?.services?.images?.[index] && arData.pages.services.images[index].trim() && (
                               <div className="mt-2">
                                 <img 
                                   src={arData.pages.services.images[index]} 
@@ -893,6 +913,7 @@ export default function AdminSupabasePage() {
                                     e.currentTarget.style.display = 'none';
                                   }}
                                 />
+                                <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
                               </div>
                             )}
                           </div>
