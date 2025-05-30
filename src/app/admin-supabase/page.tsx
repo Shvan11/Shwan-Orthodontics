@@ -908,7 +908,7 @@ export default function AdminSupabasePage() {
                             />
                             {/* Debug info for this specific image */}
                             <div className="mt-1 text-xs text-gray-500">
-                              Debug: Value = "{enData.pages?.services?.images?.[index] || 'EMPTY'}" | 
+                              Debug: Value = &quot;{enData.pages?.services?.images?.[index] || 'EMPTY'}&quot; | 
                               Array length = {enData.pages?.services?.images?.length || 0} | 
                               Index = {index}
                             </div>
