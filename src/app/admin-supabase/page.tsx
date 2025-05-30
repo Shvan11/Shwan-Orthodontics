@@ -799,7 +799,7 @@ export default function AdminSupabasePage() {
           {activeTab === 'services' && (
             <div className="mb-8">
               <div className="bg-red-500 text-white p-4 text-center text-xl font-bold mb-4">
-                🚨 SERVICES TAB IS LOADING - YOU SHOULD SEE THIS RED BOX 🚨
+                🚨 SERVICES TAB IS LOADING - VERSION 2.0 - TIMESTAMP: {new Date().toISOString()} 🚨
               </div>
               
               <div className="flex justify-between items-center mb-4">
