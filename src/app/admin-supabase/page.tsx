@@ -798,6 +798,10 @@ export default function AdminSupabasePage() {
           {/* Services Management */}
           {activeTab === 'services' && (
             <div className="mb-8">
+              <div className="bg-red-500 text-white p-4 text-center text-xl font-bold mb-4">
+                🚨 SERVICES TAB IS LOADING - YOU SHOULD SEE THIS RED BOX 🚨
+              </div>
+              
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold text-gray-800">
                   Services Management (Supabase)
@@ -819,24 +823,33 @@ export default function AdminSupabasePage() {
                   Images: {enData.pages?.services?.images?.length || 0} | 
                   Detail Images: {enData.pages?.services?.detail_images?.length || 0}
                 </div>
-                <div className="mt-2 space-x-2">
-                  <button
-                    onClick={initializeImageArrays}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-bold"
-                  >
-                    🔧 INITIALIZE IMAGE ARRAYS - CLICK ME!
-                  </button>
-                  <button
-                    onClick={() => {
-                      console.log('Button clicked!');
-                      console.log('enData:', enData);
-                      console.log('images array:', enData.pages?.services?.images);
-                      initializeImageArrays();
-                    }}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded font-bold"
-                  >
-                    🔍 DEBUG & INITIALIZE
-                  </button>
+                <div className="mt-4 p-4 bg-yellow-200 border-4 border-red-500">
+                  <div className="text-center text-xl font-bold text-red-600 mb-4">
+                    🚨 EMERGENCY BUTTONS - CLICK TO FIX IMAGES 🚨
+                  </div>
+                  <div className="flex justify-center space-x-4">
+                    <button
+                      onClick={() => {
+                        alert('BUTTON 1 CLICKED!');
+                        initializeImageArrays();
+                      }}
+                      className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded font-bold text-lg"
+                    >
+                      🔧 BUTTON 1 - INITIALIZE ARRAYS
+                    </button>
+                    <button
+                      onClick={() => {
+                        alert('BUTTON 2 CLICKED!');
+                        console.log('Button clicked!');
+                        console.log('enData:', enData);
+                        console.log('images array:', enData.pages?.services?.images);
+                        initializeImageArrays();
+                      }}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded font-bold text-lg"
+                    >
+                      🔍 BUTTON 2 - DEBUG & INITIALIZE
+                    </button>
+                  </div>
                 </div>
               </div>
 
