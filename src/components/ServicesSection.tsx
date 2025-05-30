@@ -68,14 +68,19 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
     () => t.pages.services.descriptions ?? [],
     [t.pages.services.descriptions]
   );
-  const serviceImages = useMemo(
-    () => t.pages.services.images ?? [],
-    [t.pages.services.images]
-  );
-  const serviceDetailImages = useMemo(
-    () => t.pages.services.detail_images ?? [],
-    [t.pages.services.detail_images]
-  );
+  // Dynamic image generation - no database paths needed
+  const getServiceMainImage = (serviceIndex: number) => {
+    return `/images/service-${serviceIndex}-main.jpg`;
+  };
+
+  const getServiceDetailImages = (serviceIndex: number) => {
+    // Try multiple detail images per service
+    const detailImages = [];
+    for (let i = 1; i <= 5; i++) {
+      detailImages.push(`/images/service-${serviceIndex}-detail-${i}.jpg`);
+    }
+    return detailImages;
+  };
 
   const numColumns = useMemo(
     () => (isSmallScreen ? 1 : isMediumScreen ? 2 : 3),
@@ -164,10 +169,8 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
     const serviceIndex = Object.keys(servicesData).indexOf(expandedServiceId);
     if (serviceIndex === -1) return null;
 
-    // Use dynamic detail images if available, otherwise fallback to hardcoded
-    const detailImages = serviceDetailImages[serviceIndex] && serviceDetailImages[serviceIndex].length > 0
-      ? serviceDetailImages[serviceIndex]
-      : servicesData[expandedServiceId]?.detailImages ?? [];
+    // Use dynamic detail images
+    const detailImages = getServiceDetailImages(serviceIndex);
 
     return {
       id: expandedServiceId,
@@ -175,7 +178,7 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
       description: descriptions[serviceIndex] ?? "",
       images: detailImages,
     };
-  }, [expandedServiceId, services, descriptions, serviceDetailImages]);
+  }, [expandedServiceId, services, descriptions]);
 
   return (
     <section id="services" className="mt-12 mx-auto px-4 sm:px-6 max-w-7xl">
@@ -198,10 +201,8 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
                 Object.keys(servicesData).indexOf(serviceKey);
               const isActive = expandedServiceId === serviceData.id;
 
-              // Use dynamic main image if available, otherwise fallback to hardcoded
-              const mainImage = serviceImages[serviceIndex] && serviceImages[serviceIndex].trim()
-                ? serviceImages[serviceIndex]
-                : serviceData.image;
+              // Use dynamic main image
+              const mainImage = getServiceMainImage(serviceIndex);
 
               return (
                 <div key={serviceData.id}>

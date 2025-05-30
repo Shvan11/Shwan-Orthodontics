@@ -93,8 +93,8 @@ export default function AdminSupabasePage() {
     }
   }, [enData, arData]);
 
-  // Update functions for different content types
-  const updateService = (index: number, locale: 'en' | 'ar', field: 'title' | 'description' | 'image' | 'detail_images', value: string) => {
+  // Update functions for different content types  
+  const updateService = (index: number, locale: 'en' | 'ar', field: 'title' | 'description', value: string) => {
     const data = locale === 'en' ? enData : arData;
     const setData = locale === 'en' ? setEnData : setArData;
     
@@ -102,26 +102,11 @@ export default function AdminSupabasePage() {
 
     const updatedServices = [...(data.pages?.services?.services_list || [])];
     const updatedDescriptions = [...(data.pages?.services?.descriptions || [])];
-    const updatedImages = [...(data.pages?.services?.images || [])];
-    const updatedDetailImages = [...(data.pages?.services?.detail_images || [])];
 
     if (field === 'title') {
       updatedServices[index] = value;
     } else if (field === 'description') {
       updatedDescriptions[index] = value;
-    } else if (field === 'image') {
-      // Ensure images array is long enough
-      while (updatedImages.length <= index) {
-        updatedImages.push('');
-      }
-      updatedImages[index] = value;
-    } else if (field === 'detail_images') {
-      // Ensure detail_images array is long enough
-      while (updatedDetailImages.length <= index) {
-        updatedDetailImages.push([]);
-      }
-      // Convert comma-separated string to array
-      updatedDetailImages[index] = value.split(',').map(url => url.trim()).filter(url => url);
     }
 
     setData({
@@ -131,9 +116,7 @@ export default function AdminSupabasePage() {
         services: {
           ...data.pages?.services,
           services_list: updatedServices,
-          descriptions: updatedDescriptions,
-          images: updatedImages,
-          detail_images: updatedDetailImages
+          descriptions: updatedDescriptions
         }
       }
     });
@@ -234,8 +217,6 @@ export default function AdminSupabasePage() {
 
     const newService = "New Service";
     const newDescription = "Service description";
-    const newImage = "";
-    const newDetailImages: string[] = [];
     const newArService = "خدمة جديدة";
     const newArDescription = "وصف الخدمة";
 
@@ -246,9 +227,7 @@ export default function AdminSupabasePage() {
         services: {
           ...enData.pages?.services,
           services_list: [...(enData.pages?.services?.services_list || []), newService],
-          descriptions: [...(enData.pages?.services?.descriptions || []), newDescription],
-          images: [...(enData.pages?.services?.images || []), newImage],
-          detail_images: [...(enData.pages?.services?.detail_images || []), newDetailImages]
+          descriptions: [...(enData.pages?.services?.descriptions || []), newDescription]
         }
       }
     });
@@ -260,9 +239,7 @@ export default function AdminSupabasePage() {
         services: {
           ...arData.pages?.services,
           services_list: [...(arData.pages?.services?.services_list || []), newArService],
-          descriptions: [...(arData.pages?.services?.descriptions || []), newArDescription],
-          images: [...(arData.pages?.services?.images || []), newImage],
-          detail_images: [...(arData.pages?.services?.detail_images || []), newDetailImages]
+          descriptions: [...(arData.pages?.services?.descriptions || []), newArDescription]
         }
       }
     });
@@ -279,9 +256,7 @@ export default function AdminSupabasePage() {
         services: {
           ...enData.pages?.services,
           services_list: (enData.pages?.services?.services_list || []).filter((_, i) => i !== index),
-          descriptions: (enData.pages?.services?.descriptions || []).filter((_, i) => i !== index),
-          images: (enData.pages?.services?.images || []).filter((_, i) => i !== index),
-          detail_images: (enData.pages?.services?.detail_images || []).filter((_, i) => i !== index)
+          descriptions: (enData.pages?.services?.descriptions || []).filter((_, i) => i !== index)
         }
       }
     });
@@ -293,64 +268,12 @@ export default function AdminSupabasePage() {
         services: {
           ...arData.pages?.services,
           services_list: (arData.pages?.services?.services_list || []).filter((_, i) => i !== index),
-          descriptions: (arData.pages?.services?.descriptions || []).filter((_, i) => i !== index),
-          images: (arData.pages?.services?.images || []).filter((_, i) => i !== index),
-          detail_images: (arData.pages?.services?.detail_images || []).filter((_, i) => i !== index)
+          descriptions: (arData.pages?.services?.descriptions || []).filter((_, i) => i !== index)
         }
       }
     });
   };
 
-  // Auto-populate images from hardcoded data
-  const autoPopulateImages = () => {
-    if (!enData || !arData) return;
-
-    // Default service images from your existing setup
-    const defaultImages = [
-      "/images/braces1.jpeg",      // Braces
-      "/images/aligners1.jpg",     // Aligners  
-      "/images/cbct1.png",         // CBCT
-      "/images/scanning1.png",     // Scanning
-      "/images/whitening1.avif"    // Whitening
-    ];
-
-    const defaultDetailImages = [
-      ["/images/braces2.jpg", "/images/braces3.jpeg"],           // Braces details
-      ["/images/aligners2.jpeg", "/images/aligners3.jpeg"],      // Aligners details
-      ["/images/cbct2.webp", "/images/cbct3.jpg"],               // CBCT details
-      ["/images/scanning2.jpg"],                                 // Scanning details
-      ["/images/whitening2.webp", "/images/whitening3.jpg"]      // Whitening details
-    ];
-
-    // Update English data
-    setEnData({
-      ...enData,
-      pages: {
-        ...enData.pages,
-        services: {
-          ...enData.pages?.services,
-          images: defaultImages,
-          detail_images: defaultDetailImages
-        }
-      }
-    });
-
-    // Update Arabic data (same images)
-    setArData({
-      ...arData,
-      pages: {
-        ...arData.pages,
-        services: {
-          ...arData.pages?.services,
-          images: defaultImages,
-          detail_images: defaultDetailImages
-        }
-      }
-    });
-
-    setMessage('✅ Auto-populated images from existing files! All service images are now loaded.');
-    setTimeout(() => setMessage(''), 4000);
-  };
 
   // Gallery management functions
   const addGalleryCase = () => {
@@ -813,35 +736,27 @@ export default function AdminSupabasePage() {
                 <h2 className="text-2xl font-semibold text-gray-800">
                   Services Management (Supabase)
                 </h2>
-                <div className="space-x-2">
-                  <button
-                    onClick={autoPopulateImages}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-                  >
-                    🚀 Auto-Load Images
-                  </button>
-                  <button
-                    onClick={addService}
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-                  >
-                    + Add New Service
-                  </button>
-                </div>
+                <button
+                  onClick={addService}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+                >
+                  + Add New Service
+                </button>
               </div>
 
-              {/* Info about images */}
-              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              {/* Info about dynamic images */}
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <div className="flex items-start space-x-3">
-                  <div className="text-blue-600 text-xl">💡</div>
+                  <div className="text-green-600 text-xl">🔄</div>
                   <div>
-                    <h3 className="font-medium text-blue-900 mb-1">Service Images Management</h3>
-                    <p className="text-blue-800 text-sm mb-2">
-                      You can manage service images in two ways:
+                    <h3 className="font-medium text-green-900 mb-1">Dynamic Image Detection</h3>
+                    <p className="text-green-800 text-sm mb-2">
+                      Images are automatically detected using predictable file names:
                     </p>
-                    <ul className="text-blue-700 text-sm space-y-1">
-                      <li>• <strong>Auto-Load:</strong> Click &quot;🚀 Auto-Load Images&quot; to automatically load your existing images</li>
-                      <li>• <strong>Manual:</strong> Enter image paths manually in the fields below</li>
-                      <li>• <strong>Live Preview:</strong> Images show preview thumbnails when paths are correct</li>
+                    <ul className="text-green-700 text-sm space-y-1">
+                      <li>• <strong>Main Images:</strong> /images/service-0-main.jpg, service-1-main.jpg, etc.</li>
+                      <li>• <strong>Detail Images:</strong> /images/service-0-detail-1.jpg, service-0-detail-2.jpg, etc.</li>
+                      <li>• <strong>Auto-Update:</strong> Replace files and they appear instantly - no database updates needed!</li>
                     </ul>
                   </div>
                 </div>
@@ -889,42 +804,42 @@ export default function AdminSupabasePage() {
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                           </div>
+                          {/* Dynamic Images Preview */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-600 mb-1">
-                              Main Image URL
+                            <label className="block text-sm font-medium text-gray-600 mb-2">
+                              Service Images (Auto-Detected)
                             </label>
-                            <input
-                              type="text"
-                              value={enData.pages?.services?.images?.[index] || ''}
-                              onChange={(e) => updateService(index, 'en', 'image', e.target.value)}
-                              placeholder="/images/service-image.jpg"
-                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                            {enData.pages?.services?.images?.[index] && enData.pages.services.images[index].trim() && (
-                              <div className="mt-2">
+                            <div className="p-3 bg-gray-50 rounded border">
+                              <div className="mb-3">
+                                <div className="text-sm font-medium text-gray-700 mb-1">Main Image:</div>
+                                <div className="text-xs text-gray-600 mb-2">File: /images/service-{index}-main.jpg</div>
                                 <img 
-                                  src={enData.pages?.services?.images?.[index] || ''} 
-                                  alt="Service preview"
+                                  src={`/images/service-${index}-main.jpg`}
+                                  alt="Service main"
                                   className="w-32 h-24 object-cover rounded border"
                                   onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
+                                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                                   }}
                                 />
-                                <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
                               </div>
-                            )}
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-600 mb-1">
-                              Detail Images (comma-separated URLs)
-                            </label>
-                            <textarea
-                              value={enData.pages?.services?.detail_images?.[index]?.join(', ') || ''}
-                              onChange={(e) => updateService(index, 'en', 'detail_images', e.target.value)}
-                              rows={2}
-                              placeholder="/images/detail1.jpg, /images/detail2.jpg"
-                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
+                              <div>
+                                <div className="text-sm font-medium text-gray-700 mb-1">Detail Images:</div>
+                                <div className="text-xs text-gray-600 mb-2">Files: service-{index}-detail-1.jpg, service-{index}-detail-2.jpg, etc.</div>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {[1, 2, 3].map(detailIndex => (
+                                    <img 
+                                      key={detailIndex}
+                                      src={`/images/service-${index}-detail-${detailIndex}.jpg`}
+                                      alt={`Detail ${detailIndex}`}
+                                      className="w-20 h-16 object-cover rounded border"
+                                      onError={(e) => {
+                                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+                                      }}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -957,44 +872,42 @@ export default function AdminSupabasePage() {
                               dir="rtl"
                             />
                           </div>
+                          {/* Same dynamic images preview for Arabic */}
                           <div>
-                            <label className="block text-sm font-medium text-gray-600 mb-1">
-                              رابط الصورة الرئيسية
+                            <label className="block text-sm font-medium text-gray-600 mb-2">
+                              صور الخدمة (كشف تلقائي)
                             </label>
-                            <input
-                              type="text"
-                              value={arData.pages?.services?.images?.[index] || ''}
-                              onChange={(e) => updateService(index, 'ar', 'image', e.target.value)}
-                              placeholder="/images/service-image.jpg"
-                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              dir="rtl"
-                            />
-                            {arData.pages?.services?.images?.[index] && arData.pages.services.images[index].trim() && (
-                              <div className="mt-2">
+                            <div className="p-3 bg-gray-50 rounded border">
+                              <div className="mb-3">
+                                <div className="text-sm font-medium text-gray-700 mb-1">الصورة الرئيسية:</div>
+                                <div className="text-xs text-gray-600 mb-2">ملف: /images/service-{index}-main.jpg</div>
                                 <img 
-                                  src={arData.pages.services.images[index]} 
-                                  alt="Service preview"
+                                  src={`/images/service-${index}-main.jpg`}
+                                  alt="Service main"
                                   className="w-32 h-24 object-cover rounded border"
                                   onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
+                                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                                   }}
                                 />
-                                <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
                               </div>
-                            )}
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-600 mb-1">
-                              صور التفاصيل (مفصولة بفواصل)
-                            </label>
-                            <textarea
-                              value={arData.pages?.services?.detail_images?.[index]?.join(', ') || ''}
-                              onChange={(e) => updateService(index, 'ar', 'detail_images', e.target.value)}
-                              rows={2}
-                              placeholder="/images/detail1.jpg, /images/detail2.jpg"
-                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              dir="rtl"
-                            />
+                              <div>
+                                <div className="text-sm font-medium text-gray-700 mb-1">صور التفاصيل:</div>
+                                <div className="text-xs text-gray-600 mb-2">ملفات: service-{index}-detail-1.jpg, service-{index}-detail-2.jpg, إلخ.</div>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {[1, 2, 3].map(detailIndex => (
+                                    <img 
+                                      key={detailIndex}
+                                      src={`/images/service-${index}-detail-${detailIndex}.jpg`}
+                                      alt={`Detail ${detailIndex}`}
+                                      className="w-20 h-16 object-cover rounded border"
+                                      onError={(e) => {
+                                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+                                      }}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
