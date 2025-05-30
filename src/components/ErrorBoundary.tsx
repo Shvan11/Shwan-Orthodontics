@@ -1,5 +1,4 @@
 "use client";
-// src/components/ErrorBoundary.tsx
 
 import React, { Component, ReactNode } from 'react';
 
@@ -20,18 +19,15 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error details for debugging
     console.error('ErrorBoundary caught an error:', error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      // Custom fallback UI or default error message
       if (this.props.fallback) {
         return this.props.fallback;
       }

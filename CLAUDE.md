@@ -68,13 +68,37 @@ Organized gallery with structured case data:
 - **Tailwind CSS** with custom color scheme (primary blue: `#3b82f6`, secondary green: `#10b981`)
 - **Path aliases**: Use `@/` for src directory imports
 
-## Adding New Translations
+## Content Management
 
+### Web Admin Interface
+- Visit `/admin` for a user-friendly content management interface
+- Add, edit, and delete FAQs in both English and Arabic
+- Automatic backups are created before saving changes
+- Real-time preview of content structure
+
+### Command Line Tool
+```bash
+# Interactive content management
+npm run content
+
+# Available actions:
+# 1. Add FAQ (both languages)
+# 2. List all FAQs  
+# 3. Delete FAQ
+# 4. Create backup
+```
+
+### Manual Translation Management
 1. Add key-value pairs to both `src/locales/en.json` and `src/locales/ar.json`
 2. Update `src/types/dictionary.ts` interface if adding new sections
 3. Import translations in components using either:
    - Server-side: `getDictionary(locale)` in page components
    - Client-side: Dynamic imports with caching in individual components
+
+### Backup Strategy
+- Automatic backups created before any changes
+- Manual backups via `npm run content` → option 4
+- Backup files stored with timestamps for easy recovery
 
 ## Responsive Development
 

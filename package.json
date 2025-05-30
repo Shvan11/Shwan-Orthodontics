@@ -6,9 +6,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "dev": "next dev --turbopack"
+    "dev": "next dev --turbopack",
+    "content": "node scripts/content-manager.js",
+    "migrate:supabase": "node scripts/migrate-to-supabase.js",
+    "setup:supabase": "echo 'Follow SUPABASE_SETUP.md for complete setup instructions'"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.8",
     "@vercel/analytics": "^1.5.0",
     "framer-motion": "^12.4.7",
     "i18next": "^24.2.2",
