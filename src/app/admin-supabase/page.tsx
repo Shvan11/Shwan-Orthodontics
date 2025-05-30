@@ -303,6 +303,44 @@ export default function AdminSupabasePage() {
     });
   };
 
+  // Initialize missing image arrays
+  const initializeImageArrays = () => {
+    if (!enData || !arData) return;
+
+    const serviceCount = enData.pages?.services?.services_list?.length || 0;
+    const emptyImages = Array(serviceCount).fill('');
+    const emptyDetailImages = Array(serviceCount).fill([]);
+
+    // Initialize English data
+    setEnData({
+      ...enData,
+      pages: {
+        ...enData.pages,
+        services: {
+          ...enData.pages?.services,
+          images: emptyImages,
+          detail_images: emptyDetailImages
+        }
+      }
+    });
+
+    // Initialize Arabic data
+    setArData({
+      ...arData,
+      pages: {
+        ...arData.pages,
+        services: {
+          ...arData.pages?.services,
+          images: emptyImages,
+          detail_images: emptyDetailImages
+        }
+      }
+    });
+
+    setMessage('✅ Image arrays initialized! You can now add service images.');
+    setTimeout(() => setMessage(''), 3000);
+  };
+
   // Gallery management functions
   const addGalleryCase = () => {
     if (!enData || !arData) return;
@@ -781,6 +819,14 @@ export default function AdminSupabasePage() {
                   Images: {enData.pages?.services?.images?.length || 0} | 
                   Detail Images: {enData.pages?.services?.detail_images?.length || 0}
                 </div>
+                {(!enData.pages?.services?.images || enData.pages.services.images.length === 0) && (
+                  <button
+                    onClick={initializeImageArrays}
+                    className="mt-2 bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded text-xs"
+                  >
+                    🔧 Initialize Image Arrays
+                  </button>
+                )}
               </div>
 
               <div className="space-y-6">
