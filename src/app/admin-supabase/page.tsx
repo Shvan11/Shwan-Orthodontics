@@ -301,6 +301,56 @@ export default function AdminSupabasePage() {
     });
   };
 
+  // Auto-populate images from hardcoded data
+  const autoPopulateImages = () => {
+    if (!enData || !arData) return;
+
+    // Default service images from your existing setup
+    const defaultImages = [
+      "/images/braces1.jpeg",      // Braces
+      "/images/aligners1.jpg",     // Aligners  
+      "/images/cbct1.png",         // CBCT
+      "/images/scanning1.png",     // Scanning
+      "/images/whitening1.avif"    // Whitening
+    ];
+
+    const defaultDetailImages = [
+      ["/images/braces2.jpg", "/images/braces3.jpeg"],           // Braces details
+      ["/images/aligners2.jpeg", "/images/aligners3.jpeg"],      // Aligners details
+      ["/images/cbct2.webp", "/images/cbct3.jpg"],               // CBCT details
+      ["/images/scanning2.jpg"],                                 // Scanning details
+      ["/images/whitening2.webp", "/images/whitening3.jpg"]      // Whitening details
+    ];
+
+    // Update English data
+    setEnData({
+      ...enData,
+      pages: {
+        ...enData.pages,
+        services: {
+          ...enData.pages?.services,
+          images: defaultImages,
+          detail_images: defaultDetailImages
+        }
+      }
+    });
+
+    // Update Arabic data (same images)
+    setArData({
+      ...arData,
+      pages: {
+        ...arData.pages,
+        services: {
+          ...arData.pages?.services,
+          images: defaultImages,
+          detail_images: defaultDetailImages
+        }
+      }
+    });
+
+    setMessage('✅ Auto-populated images from existing files! All service images are now loaded.');
+    setTimeout(() => setMessage(''), 4000);
+  };
 
   // Gallery management functions
   const addGalleryCase = () => {
@@ -763,14 +813,39 @@ export default function AdminSupabasePage() {
                 <h2 className="text-2xl font-semibold text-gray-800">
                   Services Management (Supabase)
                 </h2>
-                <button
-                  onClick={addService}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-                >
-                  + Add New Service
-                </button>
+                <div className="space-x-2">
+                  <button
+                    onClick={autoPopulateImages}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+                  >
+                    🚀 Auto-Load Images
+                  </button>
+                  <button
+                    onClick={addService}
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+                  >
+                    + Add New Service
+                  </button>
+                </div>
               </div>
 
+              {/* Info about images */}
+              <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-start space-x-3">
+                  <div className="text-blue-600 text-xl">💡</div>
+                  <div>
+                    <h3 className="font-medium text-blue-900 mb-1">Service Images Management</h3>
+                    <p className="text-blue-800 text-sm mb-2">
+                      You can manage service images in two ways:
+                    </p>
+                    <ul className="text-blue-700 text-sm space-y-1">
+                      <li>• <strong>Auto-Load:</strong> Click "🚀 Auto-Load Images" to automatically load your existing images</li>
+                      <li>• <strong>Manual:</strong> Enter image paths manually in the fields below</li>
+                      <li>• <strong>Live Preview:</strong> Images show preview thumbnails when paths are correct</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
               <div className="space-y-6">
                 {(enData.pages?.services?.services_list || []).map((service: string, index: number) => (
