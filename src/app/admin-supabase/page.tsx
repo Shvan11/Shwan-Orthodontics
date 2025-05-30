@@ -293,6 +293,128 @@ export default function AdminSupabasePage() {
     });
   };
 
+  // Gallery management functions
+  const addGalleryCase = () => {
+    if (!enData || !arData) return;
+
+    const nextId = Math.max(...(enData.pages?.gallery?.cases?.map(c => c.id) || [0])) + 1;
+    
+    const newEnCase = {
+      id: nextId,
+      title: `Case ${nextId}`,
+      photos: [
+        { description: "Before treatment" },
+        { description: "After treatment" }
+      ]
+    };
+
+    const newArCase = {
+      id: nextId,
+      title: `الحالة ${nextId}`,
+      photos: [
+        { description: "قبل العلاج" },
+        { description: "بعد العلاج" }
+      ]
+    };
+
+    setEnData({
+      ...enData,
+      pages: {
+        ...enData.pages,
+        gallery: {
+          ...enData.pages?.gallery,
+          cases: [...(enData.pages?.gallery?.cases || []), newEnCase]
+        }
+      }
+    });
+
+    setArData({
+      ...arData,
+      pages: {
+        ...arData.pages,
+        gallery: {
+          ...arData.pages?.gallery,
+          cases: [...(arData.pages?.gallery?.cases || []), newArCase]
+        }
+      }
+    });
+  };
+
+  const deleteGalleryCase = (caseId: number) => {
+    if (!enData || !arData) return;
+
+    setEnData({
+      ...enData,
+      pages: {
+        ...enData.pages,
+        gallery: {
+          ...enData.pages?.gallery,
+          cases: (enData.pages?.gallery?.cases || []).filter(c => c.id !== caseId)
+        }
+      }
+    });
+
+    setArData({
+      ...arData,
+      pages: {
+        ...arData.pages,
+        gallery: {
+          ...arData.pages?.gallery,
+          cases: (arData.pages?.gallery?.cases || []).filter(c => c.id !== caseId)
+        }
+      }
+    });
+  };
+
+  const updateGalleryCase = (caseId: number, locale: 'en' | 'ar', field: 'title', value: string) => {
+    const data = locale === 'en' ? enData : arData;
+    const setData = locale === 'en' ? setEnData : setArData;
+    
+    if (!data) return;
+
+    const updatedCases = (data.pages?.gallery?.cases || []).map(c => 
+      c.id === caseId ? { ...c, [field]: value } : c
+    );
+
+    setData({
+      ...data,
+      pages: {
+        ...data.pages,
+        gallery: {
+          ...data.pages?.gallery,
+          cases: updatedCases
+        }
+      }
+    });
+  };
+
+  const updateGalleryPhoto = (caseId: number, photoIndex: number, locale: 'en' | 'ar', value: string) => {
+    const data = locale === 'en' ? enData : arData;
+    const setData = locale === 'en' ? setEnData : setArData;
+    
+    if (!data) return;
+
+    const updatedCases = (data.pages?.gallery?.cases || []).map(c => {
+      if (c.id === caseId) {
+        const updatedPhotos = [...(c.photos || [])];
+        updatedPhotos[photoIndex] = { description: value };
+        return { ...c, photos: updatedPhotos };
+      }
+      return c;
+    });
+
+    setData({
+      ...data,
+      pages: {
+        ...data.pages,
+        gallery: {
+          ...data.pages?.gallery,
+          cases: updatedCases
+        }
+      }
+    });
+  };
+
   // Update About section
   const updateAbout = (locale: 'en' | 'ar', field: 'title' | 'mission', value: string) => {
     const data = locale === 'en' ? enData : arData;
@@ -483,6 +605,16 @@ export default function AdminSupabasePage() {
                   }`}
                 >
                   Services
+                </button>
+                <button 
+                  onClick={() => setActiveTab('gallery')}
+                  className={`whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === 'gallery' 
+                      ? 'border-blue-500 text-blue-600' 
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  Gallery Cases
                 </button>
                 <button 
                   onClick={() => setActiveTab('about')}
@@ -683,6 +815,18 @@ export default function AdminSupabasePage() {
                               placeholder="/images/service-image.jpg"
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
+                            {enData.pages?.services?.images?.[index] && (
+                              <div className="mt-2">
+                                <img 
+                                  src={enData.pages.services.images[index]} 
+                                  alt="Service preview"
+                                  className="w-32 h-24 object-cover rounded border"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                  }}
+                                />
+                              </div>
+                            )}
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -739,6 +883,18 @@ export default function AdminSupabasePage() {
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                               dir="rtl"
                             />
+                            {arData.pages?.services?.images?.[index] && (
+                              <div className="mt-2">
+                                <img 
+                                  src={arData.pages.services.images[index]} 
+                                  alt="Service preview"
+                                  className="w-32 h-24 object-cover rounded border"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                  }}
+                                />
+                              </div>
+                            )}
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -754,6 +910,151 @@ export default function AdminSupabasePage() {
                             />
                           </div>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Gallery Cases Management */}
+          {activeTab === 'gallery' && (
+            <div className="mb-8">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-semibold text-gray-800">
+                  Gallery Cases Management (Supabase)
+                </h2>
+                <button
+                  onClick={addGalleryCase}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+                >
+                  + Add New Case
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {(enData.pages?.gallery?.cases || []).map((galleryCase) => (
+                  <div key={galleryCase.id} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-lg font-medium text-gray-700">
+                        Case #{galleryCase.id}
+                      </h3>
+                      <button
+                        onClick={() => deleteGalleryCase(galleryCase.id)}
+                        className="text-red-600 hover:text-red-800 font-medium"
+                      >
+                        Delete Case
+                      </button>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {/* English */}
+                      <div>
+                        <h4 className="font-medium text-gray-600 mb-2">English</h4>
+                        <div className="space-y-3">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                              Case Title
+                            </label>
+                            <input
+                              type="text"
+                              value={galleryCase.title}
+                              onChange={(e) => updateGalleryCase(galleryCase.id, 'en', 'title', e.target.value)}
+                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-2">
+                              Photo Descriptions
+                            </label>
+                            {galleryCase.photos.map((photo, photoIndex) => (
+                              <div key={photoIndex} className="mb-3">
+                                <label className="block text-xs text-gray-500 mb-1">
+                                  Photo {photoIndex + 1} Description
+                                </label>
+                                <input
+                                  type="text"
+                                  value={photo.description}
+                                  onChange={(e) => updateGalleryPhoto(galleryCase.id, photoIndex, 'en', e.target.value)}
+                                  placeholder={`Image ${photoIndex + 1} description`}
+                                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                                <div className="mt-1 text-xs text-gray-500">
+                                  Image path: /images/gallery/case{galleryCase.id}/{photoIndex === 0 ? 'before' : 'after'}-{photoIndex + 1}.jpg
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Arabic */}
+                      <div>
+                        <h4 className="font-medium text-gray-600 mb-2">Arabic</h4>
+                        <div className="space-y-3">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-1">
+                              عنوان الحالة
+                            </label>
+                            <input
+                              type="text"
+                              value={arData.pages?.gallery?.cases?.find(c => c.id === galleryCase.id)?.title || ''}
+                              onChange={(e) => updateGalleryCase(galleryCase.id, 'ar', 'title', e.target.value)}
+                              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              dir="rtl"
+                            />
+                          </div>
+                          
+                          <div>
+                            <label className="block text-sm font-medium text-gray-600 mb-2">
+                              أوصاف الصور
+                            </label>
+                            {(arData.pages?.gallery?.cases?.find(c => c.id === galleryCase.id)?.photos || []).map((photo, photoIndex) => (
+                              <div key={photoIndex} className="mb-3">
+                                <label className="block text-xs text-gray-500 mb-1">
+                                  وصف الصورة {photoIndex + 1}
+                                </label>
+                                <input
+                                  type="text"
+                                  value={photo.description}
+                                  onChange={(e) => updateGalleryPhoto(galleryCase.id, photoIndex, 'ar', e.target.value)}
+                                  placeholder={`وصف الصورة ${photoIndex + 1}`}
+                                  className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  dir="rtl"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Image Preview Section */}
+                    <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                      <h5 className="text-sm font-medium text-gray-700 mb-3">Current Case Images</h5>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {galleryCase.photos.map((photo, photoIndex) => {
+                          const imagePath = `/images/gallery/case${galleryCase.id}/${photoIndex === 0 ? 'before' : 'after'}-${photoIndex + 1}.jpg`;
+                          return (
+                            <div key={photoIndex} className="text-center">
+                              <img 
+                                src={imagePath}
+                                alt={photo.description}
+                                className="w-full h-32 object-cover rounded border mb-2"
+                                onError={(e) => {
+                                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+                                }}
+                              />
+                              <div className="text-xs text-gray-600">{photo.description}</div>
+                              <div className="text-xs text-gray-400 mt-1">Photo {photoIndex + 1}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className="mt-3 text-xs text-gray-500">
+                        💡 Upload images to /public/images/gallery/case{galleryCase.id}/ folder with names: before-1.jpg, after-2.jpg, etc.
                       </div>
                     </div>
                   </div>
