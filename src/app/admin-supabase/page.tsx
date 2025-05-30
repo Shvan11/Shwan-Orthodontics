@@ -115,6 +115,8 @@ export default function AdminSupabasePage() {
         updatedImages.push('');
       }
       updatedImages[index] = value;
+      console.log(`Setting image[${index}] = "${value}"`);
+      console.log('Updated images array:', updatedImages);
     } else if (field === 'detail_images') {
       // Ensure detail_images array is long enough
       while (updatedDetailImages.length <= index) {
@@ -834,19 +836,34 @@ export default function AdminSupabasePage() {
                               placeholder="/images/service-image.jpg"
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            {enData.pages?.services?.images?.[index] && enData.pages.services.images[index].trim() && (
-                              <div className="mt-2">
-                                <img 
-                                  src={enData.pages.services.images[index]} 
-                                  alt="Service preview"
-                                  className="w-32 h-24 object-cover rounded border"
-                                  onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
-                                  }}
-                                />
-                                <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
-                              </div>
-                            )}
+                            {/* Debug info for this specific image */}
+                            <div className="mt-1 text-xs text-gray-500">
+                              Debug: Value = "{enData.pages?.services?.images?.[index] || 'EMPTY'}" | 
+                              Array length = {enData.pages?.services?.images?.length || 0} | 
+                              Index = {index}
+                            </div>
+                            {/* Always show preview area for testing */}
+                            <div className="mt-2 p-2 border border-dashed border-gray-300 rounded">
+                              {enData.pages?.services?.images?.[index] && enData.pages.services.images[index].trim() ? (
+                                <div>
+                                  <img 
+                                    src={enData.pages.services.images[index]} 
+                                    alt="Service preview"
+                                    className="w-32 h-24 object-cover rounded border"
+                                    onError={(e) => {
+                                      console.error('Image failed to load:', enData.pages.services.images[index]);
+                                      e.currentTarget.style.display = 'none';
+                                    }}
+                                    onLoad={() => {
+                                      console.log('Image loaded successfully:', enData.pages.services.images[index]);
+                                    }}
+                                  />
+                                  <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
+                                </div>
+                              ) : (
+                                <div className="text-xs text-gray-400">No image URL or empty</div>
+                              )}
+                            </div>
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
