@@ -41,7 +41,7 @@ const FAQToggle = ({ index, question, answer, isRTL = false }: FAQToggleProps) =
         className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
         aria-hidden={!isOpen}
       >
-        <p className={`mt-3 text-gray-700 px-1 ${isRTL ? 'text-right' : 'text-left'}`}>{answer}</p>
+        <p className={`mt-3 text-gray-700 px-1 whitespace-pre-line ${isRTL ? 'text-right' : 'text-left'}`}>{answer}</p>
       </div>
     </div>
   );

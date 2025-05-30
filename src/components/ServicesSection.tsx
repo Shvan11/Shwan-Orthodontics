@@ -216,7 +216,7 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
                   <h3 className="text-2xl font-semibold mb-4 text-blue-700">
                     {expandedService.title}
                   </h3>
-                  <p className="text-gray-700 text-lg">
+                  <p className="text-gray-700 text-lg whitespace-pre-line">
                     {expandedService.description}
                   </p>
 
