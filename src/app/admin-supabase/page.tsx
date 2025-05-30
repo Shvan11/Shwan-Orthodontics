@@ -893,15 +893,15 @@ export default function AdminSupabasePage() {
                               {enData.pages?.services?.images?.[index] && enData.pages.services.images[index].trim() ? (
                                 <div>
                                   <img 
-                                    src={enData.pages.services.images[index]} 
+                                    src={enData.pages?.services?.images?.[index] || ''} 
                                     alt="Service preview"
                                     className="w-32 h-24 object-cover rounded border"
                                     onError={(e) => {
-                                      console.error('Image failed to load:', enData.pages.services.images[index]);
+                                      console.error('Image failed to load:', enData.pages?.services?.images?.[index]);
                                       e.currentTarget.style.display = 'none';
                                     }}
                                     onLoad={() => {
-                                      console.log('Image loaded successfully:', enData.pages.services.images[index]);
+                                      console.log('Image loaded successfully:', enData.pages?.services?.images?.[index]);
                                     }}
                                   />
                                   <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
