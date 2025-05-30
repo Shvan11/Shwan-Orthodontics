@@ -128,14 +128,22 @@ export class ContentManager {
   }
 }
 
-// Real-time subscriptions
+// Real-time subscriptions (with error handling)
 export const subscribeToContentChanges = (callback: (payload: unknown) => void) => {
-  return supabase
-    .channel('content-changes')
-    .on('postgres_changes', { 
-      event: '*', 
-      schema: 'public', 
-      table: 'content' 
-    }, callback)
-    .subscribe()
+  try {
+    return supabase
+      .channel('content-changes')
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'content' 
+      }, callback)
+      .subscribe()
+  } catch (error) {
+    console.warn('Real-time subscription failed:', error);
+    // Return a mock subscription object
+    return {
+      unsubscribe: () => {},
+    };
+  }
 }

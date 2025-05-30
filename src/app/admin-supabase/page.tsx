@@ -42,19 +42,24 @@ export default function AdminSupabasePage() {
     loadData();
   }, [loadData]);
 
-  // Set up real-time subscriptions
+  // Set up real-time subscriptions (with error handling)
   useEffect(() => {
-    const subscription = subscribeToContentChanges((payload) => {
-      console.log('Real-time update received:', payload);
-      setMessage('🔄 Content updated by another user, refreshing...');
-      setTimeout(() => {
-        loadData();
-      }, 1000);
-    });
+    try {
+      const subscription = subscribeToContentChanges((payload) => {
+        console.log('Real-time update received:', payload);
+        setMessage('🔄 Content updated by another user, refreshing...');
+        setTimeout(() => {
+          loadData();
+        }, 1000);
+      });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+      return () => {
+        subscription.unsubscribe();
+      };
+    } catch (error) {
+      console.warn('Real-time features disabled:', error);
+      // Continue without real-time - admin panel will still work
+    }
   }, [loadData]);
 
   // Save changes to Supabase
