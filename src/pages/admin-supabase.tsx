@@ -23,8 +23,8 @@ export default function AdminSupabasePage() {
         ContentManager.getFullContent('ar')
       ]);
       
-      setEnData(enContent);
-      setArData(arContent);
+      setEnData(enContent as unknown as Dictionary);
+      setArData(arContent as unknown as Dictionary);
       setMessage('✅ Content loaded from Supabase successfully!');
       setTimeout(() => setMessage(''), 3000);
     } catch (error) {
