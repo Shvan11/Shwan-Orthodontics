@@ -115,8 +115,6 @@ export default function AdminSupabasePage() {
         updatedImages.push('');
       }
       updatedImages[index] = value;
-      console.log(`Setting image[${index}] = "${value}"`);
-      console.log('Updated images array:', updatedImages);
     } else if (field === 'detail_images') {
       // Ensure detail_images array is long enough
       while (updatedDetailImages.length <= index) {
@@ -236,7 +234,7 @@ export default function AdminSupabasePage() {
 
     const newService = "New Service";
     const newDescription = "Service description";
-    const newImage = "/images/service-placeholder.jpg";
+    const newImage = "";
     const newDetailImages: string[] = [];
     const newArService = "خدمة جديدة";
     const newArDescription = "وصف الخدمة";
@@ -303,43 +301,6 @@ export default function AdminSupabasePage() {
     });
   };
 
-  // Initialize missing image arrays
-  const initializeImageArrays = () => {
-    if (!enData || !arData) return;
-
-    const serviceCount = enData.pages?.services?.services_list?.length || 0;
-    const emptyImages = Array(serviceCount).fill('');
-    const emptyDetailImages = Array(serviceCount).fill([]);
-
-    // Initialize English data
-    setEnData({
-      ...enData,
-      pages: {
-        ...enData.pages,
-        services: {
-          ...enData.pages?.services,
-          images: emptyImages,
-          detail_images: emptyDetailImages
-        }
-      }
-    });
-
-    // Initialize Arabic data
-    setArData({
-      ...arData,
-      pages: {
-        ...arData.pages,
-        services: {
-          ...arData.pages?.services,
-          images: emptyImages,
-          detail_images: emptyDetailImages
-        }
-      }
-    });
-
-    setMessage('✅ Image arrays initialized! You can now add service images.');
-    setTimeout(() => setMessage(''), 3000);
-  };
 
   // Gallery management functions
   const addGalleryCase = () => {
@@ -798,10 +759,6 @@ export default function AdminSupabasePage() {
           {/* Services Management */}
           {activeTab === 'services' && (
             <div className="mb-8">
-              <div className="bg-red-500 text-white p-4 text-center text-xl font-bold mb-4">
-                🚨 SERVICES TAB IS LOADING - VERSION 2.0 - TIMESTAMP: {new Date().toISOString()} 🚨
-              </div>
-              
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold text-gray-800">
                   Services Management (Supabase)
@@ -814,44 +771,6 @@ export default function AdminSupabasePage() {
                 </button>
               </div>
 
-              {/* Debug Info */}
-              <div className="mb-4 p-3 bg-blue-50 rounded-lg text-xs">
-                <div className="font-medium text-blue-800 mb-1">Debug Info:</div>
-                <div className="text-blue-700">
-                  Services: {enData.pages?.services?.services_list?.length || 0} | 
-                  Descriptions: {enData.pages?.services?.descriptions?.length || 0} | 
-                  Images: {enData.pages?.services?.images?.length || 0} | 
-                  Detail Images: {enData.pages?.services?.detail_images?.length || 0}
-                </div>
-                <div className="mt-4 p-4 bg-yellow-200 border-4 border-red-500">
-                  <div className="text-center text-xl font-bold text-red-600 mb-4">
-                    🚨 EMERGENCY BUTTONS - CLICK TO FIX IMAGES 🚨
-                  </div>
-                  <div className="flex justify-center space-x-4">
-                    <button
-                      onClick={() => {
-                        alert('BUTTON 1 CLICKED!');
-                        initializeImageArrays();
-                      }}
-                      className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded font-bold text-lg"
-                    >
-                      🔧 BUTTON 1 - INITIALIZE ARRAYS
-                    </button>
-                    <button
-                      onClick={() => {
-                        alert('BUTTON 2 CLICKED!');
-                        console.log('Button clicked!');
-                        console.log('enData:', enData);
-                        console.log('images array:', enData.pages?.services?.images);
-                        initializeImageArrays();
-                      }}
-                      className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded font-bold text-lg"
-                    >
-                      🔍 BUTTON 2 - DEBUG & INITIALIZE
-                    </button>
-                  </div>
-                </div>
-              </div>
 
               <div className="space-y-6">
                 {(enData.pages?.services?.services_list || []).map((service: string, index: number) => (
@@ -906,34 +825,19 @@ export default function AdminSupabasePage() {
                               placeholder="/images/service-image.jpg"
                               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
-                            {/* Debug info for this specific image */}
-                            <div className="mt-1 text-xs text-gray-500">
-                              Debug: Value = &quot;{enData.pages?.services?.images?.[index] || 'EMPTY'}&quot; | 
-                              Array length = {enData.pages?.services?.images?.length || 0} | 
-                              Index = {index}
-                            </div>
-                            {/* Always show preview area for testing */}
-                            <div className="mt-2 p-2 border border-dashed border-gray-300 rounded">
-                              {enData.pages?.services?.images?.[index] && enData.pages.services.images[index].trim() ? (
-                                <div>
-                                  <img 
-                                    src={enData.pages?.services?.images?.[index] || ''} 
-                                    alt="Service preview"
-                                    className="w-32 h-24 object-cover rounded border"
-                                    onError={(e) => {
-                                      console.error('Image failed to load:', enData.pages?.services?.images?.[index]);
-                                      e.currentTarget.style.display = 'none';
-                                    }}
-                                    onLoad={() => {
-                                      console.log('Image loaded successfully:', enData.pages?.services?.images?.[index]);
-                                    }}
-                                  />
-                                  <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
-                                </div>
-                              ) : (
-                                <div className="text-xs text-gray-400">No image URL or empty</div>
-                              )}
-                            </div>
+                            {enData.pages?.services?.images?.[index] && enData.pages.services.images[index].trim() && (
+                              <div className="mt-2">
+                                <img 
+                                  src={enData.pages?.services?.images?.[index] || ''} 
+                                  alt="Service preview"
+                                  className="w-32 h-24 object-cover rounded border"
+                                  onError={(e) => {
+                                    e.currentTarget.style.display = 'none';
+                                  }}
+                                />
+                                <div className="text-xs text-green-600 mt-1">✓ Image preview</div>
+                              </div>
+                            )}
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-gray-600 mb-1">
