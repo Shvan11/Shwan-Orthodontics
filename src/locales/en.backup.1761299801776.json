@@ -39,6 +39,7 @@
     "about": {
       "title": "About Shwan Orthodontics",
       "mission": "Shwan Orthodontics is dedicated to providing top-tier orthodontic care in Iraq. Our mission is to help patients achieve their perfect smiles through cutting-edge technology and expert treatment.",
+
       "team": "Meet Our Team",
       "team_info": "Led by Dr. Shwan, our team is committed to excellence in orthodontic care."
     },
@@ -46,7 +47,7 @@
       "title": "Frequently Asked Questions",
       "questions": [
         {
-          "question": "What is orthodontics ?",
+          "question": "What is orthodontics?",
           "answer": "Orthodontics is a branch of dentistry that deals with correcting teeth and jaw alignment."
         },
         {

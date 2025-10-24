@@ -18,21 +18,21 @@ export default function AdminPage() {
     const loadData = async () => {
       try {
         const [enRes, arRes] = await Promise.all([
-          fetch('/api/admin/content?locale=en'),
-          fetch('/api/admin/content?locale=ar')
+          fetch('/api/admin/supabase?locale=en'),
+          fetch('/api/admin/supabase?locale=ar')
         ]);
-        
+
         if (enRes.ok && arRes.ok) {
           const enContent = await enRes.json();
           const arContent = await arRes.json();
           setEnData(enContent);
           setArData(arContent);
         } else {
-          setMessage('Failed to load content. API response not ok.');
+          setMessage('Failed to load content from Supabase. API response not ok.');
         }
       } catch (error) {
         console.error('Failed to load content:', error);
-        setMessage('Failed to load content. Check console for details.');
+        setMessage('Failed to load content from Supabase. Check console for details.');
       } finally {
         setLoading(false);
       }
@@ -507,27 +507,27 @@ export default function AdminPage() {
   // Save changes
   const saveChanges = async () => {
     if (!enData || !arData) return;
-    
+
     setSaving(true);
     try {
       const [enRes, arRes] = await Promise.all([
-        fetch('/api/admin/content', {
-          method: 'POST',
+        fetch('/api/admin/supabase', {
+          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ locale: 'en', data: enData })
         }),
-        fetch('/api/admin/content', {
-          method: 'POST',
+        fetch('/api/admin/supabase', {
+          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ locale: 'ar', data: arData })
         })
       ]);
 
       if (enRes.ok && arRes.ok) {
-        setMessage('✅ Content saved successfully!');
+        setMessage('✅ Content saved successfully to Supabase!');
         setTimeout(() => setMessage(''), 3000);
       } else {
-        setMessage('❌ Failed to save content');
+        setMessage('❌ Failed to save content to Supabase');
       }
     } catch (error) {
       console.error('Save error:', error);
