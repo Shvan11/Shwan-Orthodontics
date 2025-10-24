@@ -76,7 +76,7 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
   const getServiceDetailImages = (serviceIndex: number) => {
     // Try multiple detail images per service
     const detailImages = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 2; i++) {
       detailImages.push(`/images/service-${serviceIndex}-detail-${i}.jpg`);
     }
     return detailImages;
