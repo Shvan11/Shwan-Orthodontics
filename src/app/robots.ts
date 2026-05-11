@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/admin-supabase', '/api/'],
       },
     ],
-    sitemap: 'https://shwanorthodontics.com/sitemap.xml',
+    sitemap: 'https://www.shwan-orthodontics.com/sitemap.xml',
   };
 }

@@ -24,7 +24,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getDictionary(locale);
 
-  const baseUrl = 'https://shwanorthodontics.com';
+  const baseUrl = 'https://www.shwan-orthodontics.com';
 
   return {
     title: t.seo?.title || 'Shwan Orthodontics',
@@ -81,7 +81,7 @@ export default async function LocaleLayout({
               '@type': 'DentalClinic',
               name: 'Shwan Orthodontics',
               description: 'Professional orthodontic care in Duhok, Kurdistan Region, Iraq',
-              url: 'https://shwanorthodontics.com',
+              url: 'https://www.shwan-orthodontics.com',
               telephone: '+964-750-810-8833',
               email: 'shwan.elias@uod.ac',
               address: {

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const baseUrl = 'https://shwanorthodontics.com';
+const baseUrl = 'https://www.shwan-orthodontics.com';
 const locales = ['en', 'ar'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
