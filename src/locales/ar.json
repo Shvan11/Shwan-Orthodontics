@@ -78,6 +78,9 @@
     "gallery": {
       "title": "الصور",
       "casePrefix": "الحالة",
+      "swipeHint": "اسحب يساراً أو يميناً للتنقل",
+      "before": "قبل",
+      "after": "بعد",
       "cases": [
         {
           "id": 1,

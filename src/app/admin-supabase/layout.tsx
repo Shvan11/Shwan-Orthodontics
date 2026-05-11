@@ -1,15 +1,15 @@
-import { Metadata } from 'next';
+import '@/styles/globals.css';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Admin Panel - Supabase CMS',
-  description: 'Content Management System powered by Supabase',
-  robots: 'noindex, nofollow', // Prevent search engines from indexing admin pages
+  title: 'Admin — Shwan Orthodontics',
+  robots: { index: false, follow: false },
 };
 
-export default function AdminSupabaseLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return children;
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }

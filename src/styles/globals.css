@@ -1,8 +1,15 @@
 /* src/styles/globals.css */
-@import 'animations.css';
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
+@import './animations.css';
+
+@theme {
+  --color-primary-light: #3b82f6;
+  --color-primary:       #2563eb;
+  --color-primary-dark:  #1d4ed8;
+  --color-secondary-light: #34d399;
+  --color-secondary:       #10b981;
+  --color-secondary-dark:  #059669;
+}
 
 /* Smooth Scrolling */
 html {

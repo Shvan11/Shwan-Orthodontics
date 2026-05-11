@@ -26,6 +26,12 @@
 _tree.js
 src/components/GalleryCarousel.tsx.horizontal
 
+# browser automation artifacts
+.playwright-mcp/
+
+# local Claude Code settings
+.claude/settings.local.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*

@@ -56,6 +56,9 @@ export interface Dictionary {
     gallery: {
       title: string;
       casePrefix: string;
+      swipeHint: string;
+      before: string;
+      after: string;
       cases: {
         id: number;
         title: string;

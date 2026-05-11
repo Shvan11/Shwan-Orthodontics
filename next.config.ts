@@ -2,16 +2,24 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        pathname: '/**',
-      },
-    ],
     formats: ['image/avif', 'image/webp'],
   },
-  
+
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/admin-supabase',
+        permanent: true,
+      },
+      {
+        source: '/',
+        destination: '/en',
+        permanent: false,
+      },
+    ];
+  },
+
   // Security headers
   async headers() {
     return [
@@ -34,16 +42,30 @@ const nextConfig: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
           },
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              // 'unsafe-eval' is required by React in development mode only
+              `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ""} https://va.vercel-scripts.com`,
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: blob: https:",
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com",
+              "font-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+            ].join('; '),
+          },
         ],
       },
     ];
   },
   
-  // Performance optimizations
   experimental: {
     optimizePackageImports: ['framer-motion', 'react-icons'],
   },
-  
+
   // Production optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

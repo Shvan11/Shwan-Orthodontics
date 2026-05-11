@@ -3,11 +3,10 @@
 import Link from "next/link";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useLocale } from "@/context/LocaleContext";
-import { useEffect, useState, useCallback, memo, useRef } from "react";
+import { useEffect, useState, useCallback, useMemo, memo, useRef } from "react";
 import Image from 'next/image';
 import logo from '@public/images/_logo.png';
 
-// Define a type for navbar translations
 interface NavbarTranslations {
   home?: string;
   about?: string;
@@ -23,11 +22,8 @@ interface Translations {
   [key: string]: unknown;
 }
 
-
-// Cache for loaded translations
 const loadedTranslations: Record<string, Translations> = {};
 
-// Memoized NavLink component to prevent unnecessary re-renders
 const NavLink = memo(
   ({
     href,
@@ -47,6 +43,22 @@ const NavLink = memo(
 );
 NavLink.displayName = "NavLink";
 
+const NavbarLogo = () => (
+  <Link href="/" className="flex items-center">
+    <div className="w-[120px] md:w-[150px]">
+      <Image
+        src={logo}
+        alt="Shwan Orthodontics Logo"
+        width={logo.width}
+        height={logo.height}
+        style={{ width: '100%', height: 'auto' }}
+        priority
+      />
+    </div>
+  </Link>
+);
+NavbarLogo.displayName = "NavbarLogo";
+
 function Navbar() {
   const { locale } = useLocale();
   const [t, setT] = useState<Translations>({});
@@ -54,29 +66,10 @@ function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Use useCallback for event handlers
-  const loadTranslations = useCallback(async () => {
-    // Check cache first
-    if (loadedTranslations[locale]) {
-      setT(loadedTranslations[locale]);
-      return;
-    }
-
-    // Lazy load the JSON file for the required language
-    try {
-      const translations = await import(`@/locales/${locale}.json`);
-      loadedTranslations[locale] = translations.default; // Cache the loaded translations
-      setT(translations.default);
-    } catch (error) {
-      console.error("❌ Error loading translations:", error);
-    }
-  }, [locale]);
-
   const toggleMobileMenu = useCallback((state?: boolean) => {
     setMobileMenuOpen(prev => state !== undefined ? state : !prev);
   }, []);
 
-  // Handle clicks outside the menu to close it
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -90,7 +83,6 @@ function Navbar() {
       }
     }
 
-    // Only attach the event listener if the mobile menu is open
     if (mobileMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
@@ -100,41 +92,40 @@ function Navbar() {
     };
   }, [mobileMenuOpen, toggleMobileMenu]);
 
-  // Load translations on locale change
   useEffect(() => {
-    loadTranslations();
-  }, [loadTranslations]);
+    const cached = loadedTranslations[locale];
+    if (cached) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setT(cached);
+      return;
+    }
+    let cancelled = false;
+    import(`@/locales/${locale}.json`)
+      .then(mod => {
+        if (!cancelled) {
+          loadedTranslations[locale] = mod.default as Translations;
+          setT(mod.default as Translations);
+        }
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [locale]);
 
-  // Compute navigation items
-  const navItems = [
-    { key: "home", label: t.navbar?.home || "Home" },
-    { key: "about", label: t.navbar?.about || "About" },
+  const navItems = useMemo(() => [
+    { key: "home",     label: t.navbar?.home     || "Home" },
+    { key: "about",    label: t.navbar?.about    || "About" },
     { key: "services", label: t.navbar?.services || "Services" },
-    { key: "gallery", label: t.navbar?.gallery || "Gallery" },
-    { key: "faq", label: t.navbar?.faq || "FAQ" },
-    { key: "contact", label: t.navbar?.contact || "Contact" },
-  ];
-
-  // Reusable Logo component
-  const Logo = () => (
-    <Link href="/" className="flex items-center">
-      <Image 
-        src={logo}
-        alt="Shwan Orthodontics Logo" 
-        width={logo.width}
-        height={logo.height}
-        className="h-auto w-[120px] md:w-[150px]"
-        priority
-      />
-    </Link>
-  );
+    { key: "gallery",  label: t.navbar?.gallery  || "Gallery" },
+    { key: "faq",      label: t.navbar?.faq      || "FAQ" },
+    { key: "contact",  label: t.navbar?.contact  || "Contact" },
+  ], [t.navbar]);
 
   return (
     <nav className="bg-gray-800 text-white p-4 sticky top-0 z-50">
       <div className="container mx-auto">
         {/* Mobile layout */}
         <div className="flex justify-between items-center md:hidden">
-          <Logo />
+          <NavbarLogo />
           <div className="flex items-center">
             <div className="mr-4">
               <LanguageSwitcher />
@@ -155,8 +146,8 @@ function Navbar() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d={mobileMenuOpen 
-                    ? "M6 18L18 6M6 6l12 12" 
+                  d={mobileMenuOpen
+                    ? "M6 18L18 6M6 6l12 12"
                     : "M4 6h16M4 12h16M4 18h16"
                   }
                 />
@@ -167,7 +158,7 @@ function Navbar() {
 
         {/* Desktop layout */}
         <div className="hidden md:flex justify-between items-center">
-          <Logo />
+          <NavbarLogo />
           <div className="flex-1 flex justify-center">
             <div className="flex items-center">
               {navItems.map((item) => (
@@ -206,5 +197,4 @@ function Navbar() {
   );
 }
 
-// Export memoized component to prevent unnecessary re-renders
 export default memo(Navbar);

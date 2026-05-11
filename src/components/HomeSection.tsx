@@ -7,9 +7,8 @@
    
    interface HomeSectionProps {
      t: Dictionary;
-     isRTL: boolean;
    }
-   
+
    function HomeSection({ t }: HomeSectionProps) {
      return (
        <section id="home" className='relative bg-gray-700 h-96 mx-auto'>  

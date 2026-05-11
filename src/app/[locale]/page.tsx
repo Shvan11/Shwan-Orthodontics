@@ -26,7 +26,7 @@ export default async function HomePage({
   return (
     <div className={`${isRTL ? "text-right" : "text-left"}`}>
       {/* Home Section */}
-      <HomeSection t={t} isRTL={isRTL} />
+      <HomeSection t={t} />
 
       {/* About Section */}
       <AboutSection t={t} isRTL={isRTL} />
@@ -41,7 +41,7 @@ export default async function HomePage({
       <FAQSection t={t} isRTL={isRTL} />
 
       {/* Contact Section */}
-      <ContactSection t={t} isRTL={isRTL} />
+      <ContactSection t={t} />
     </div>
   );
 }

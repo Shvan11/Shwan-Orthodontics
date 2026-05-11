@@ -49,12 +49,12 @@ export default function LogoWatermark({
   
   return (
     <div className={`absolute ${positionClasses} z-10 pointer-events-none`} style={{ opacity }}>
-      <Image 
-        src={logo} 
-        alt="Shwan Orthodontics Logo" 
-        width={width} 
-        height={height}
-        className="h-auto"
+      <Image
+        src={logo}
+        alt="Shwan Orthodontics Logo"
+        width={logo.width}
+        height={logo.height}
+        style={{ width: `${width}px`, height: 'auto' }}
       />
     </div>
   );

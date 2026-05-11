@@ -78,6 +78,9 @@
     "gallery": {
       "title": "Gallery",
       "casePrefix": "Case",
+      "swipeHint": "Swipe left or right to navigate",
+      "before": "Before",
+      "after": "After",
       "cases": [
         {
           "id": 1,

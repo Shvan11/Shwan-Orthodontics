@@ -1,75 +1,78 @@
 'use client';
-// src/components/SocialMediaLinks.tsx
 
 import { FaFacebook, FaInstagram, FaTiktok, FaYoutube } from 'react-icons/fa';
+import type { IconType } from 'react-icons';
+
+interface SocialLink {
+  name: string;
+  Icon: IconType;
+  url: string;
+  iconClass: string;
+  handle: string;
+  appUrl: string | null;
+}
+
+const SOCIAL_LINKS: SocialLink[] = [
+  {
+    name: 'Facebook',
+    Icon: FaFacebook,
+    url: 'https://www.facebook.com/Shwan.Ortho',
+    iconClass: 'text-blue-600 hover:text-blue-800',
+    handle: 'Shwan.Ortho',
+    appUrl: 'fb://facewebmodal/f?href=https://www.facebook.com/Shwan.Ortho',
+  },
+  {
+    name: 'Instagram',
+    Icon: FaInstagram,
+    url: 'https://www.instagram.com/shwan.ortho',
+    iconClass: 'text-pink-500 hover:text-pink-700',
+    handle: 'Shwan.Ortho',
+    appUrl: 'instagram://user?username=shwan.ortho',
+  },
+  {
+    name: 'TikTok',
+    Icon: FaTiktok,
+    url: 'https://www.tiktok.com/@shwan.ortho',
+    iconClass: 'text-black hover:text-gray-800',
+    handle: 'Shwan.Ortho',
+    appUrl: null,
+  },
+  {
+    name: 'YouTube',
+    Icon: FaYoutube,
+    url: 'https://www.youtube.com/@shwan.ortho',
+    iconClass: 'text-red-600 hover:text-red-800',
+    handle: 'Shwan.Ortho',
+    appUrl: null,
+  },
+];
+
+function handleMobileAppRedirect(e: React.MouseEvent<HTMLAnchorElement>, appUrl: string | null) {
+  if (appUrl && /Mobi|Android/i.test(navigator.userAgent)) {
+    e.preventDefault();
+    window.location.href = appUrl;
+  }
+}
 
 export default function SocialMediaLinks() {
-  const handleFacebookClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (/Mobi|Android/i.test(navigator.userAgent)) {
-      e.preventDefault();
-      window.location.href = 'fb://facewebmodal/f?href=https://www.facebook.com/Shwan.Ortho';
-    }
-  };
-
-  const handleInstagramClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (/Mobi|Android/i.test(navigator.userAgent)) {
-      e.preventDefault();
-      window.location.href = 'instagram://user?username=shwan.ortho';
-    }
-  };
-
   return (
     <div className="mt-6 flex justify-center px-4">
       <div className="grid grid-cols-2 sm:grid-cols-4 md:flex md:gap-12 gap-8 w-full max-w-lg">
-        <div className="flex flex-col items-center">
-          <a 
-            href="https://www.facebook.com/Shwan.Ortho" 
-            onClick={handleFacebookClick}
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex justify-center"
-          >
-            <FaFacebook className="text-4xl md:text-5xl lg:text-6xl text-blue-600 hover:text-blue-800 transition-colors duration-300" />
-          </a>
-          <p className="text-center text-sm mt-2">Shwan.Ortho</p>
-        </div>
-        
-        <div className="flex flex-col items-center">
-          <a 
-            href="https://www.instagram.com/shwan.ortho" 
-            onClick={handleInstagramClick}
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex justify-center"
-          >
-            <FaInstagram className="text-4xl md:text-5xl lg:text-6xl text-pink-500 hover:text-pink-700 transition-colors duration-300" />
-          </a>
-          <p className="text-center text-sm mt-2">Shwan.Ortho</p>
-        </div>
-        
-        <div className="flex flex-col items-center">
-          <a 
-            href="https://www.tiktok.com/@shwan.ortho" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex justify-center"
-          >
-            <FaTiktok className="text-4xl md:text-5xl lg:text-6xl text-black hover:text-gray-800 transition-colors duration-300" />
-          </a>
-          <p className="text-center text-sm mt-2">Shwan.Ortho</p>
-        </div>
-        
-        <div className="flex flex-col items-center">
-          <a 
-            href="https://www.youtube.com/@shwan.ortho" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex justify-center"
-          >
-            <FaYoutube className="text-4xl md:text-5xl lg:text-6xl text-red-600 hover:text-red-800 transition-colors duration-300" />
-          </a>
-          <p className="text-center text-sm mt-2">Shwan.Ortho</p>
-        </div>
+        {SOCIAL_LINKS.map(({ name, Icon, url, iconClass, handle, appUrl }) => (
+          <div key={name} className="flex flex-col items-center">
+            <a
+              href={url}
+              onClick={(e) => handleMobileAppRedirect(e, appUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex justify-center"
+              aria-label={name}
+            >
+              <Icon className={`text-4xl md:text-5xl lg:text-6xl transition-colors duration-300 ${iconClass}`} />
+            </a>
+            <p className="text-center text-sm mt-2">{handle}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

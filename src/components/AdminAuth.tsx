@@ -1,38 +1,38 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 interface AdminAuthProps {
   children: React.ReactNode;
 }
 
 export default function AdminAuth({ children }: AdminAuthProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => sessionStorage.getItem('admin_auth') === 'authenticated'
+  );
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
-
-  // Check if already authenticated on mount
-  useEffect(() => {
-    const authToken = sessionStorage.getItem('admin_auth');
-    if (authToken === 'authenticated') {
-      setIsAuthenticated(true);
-    }
-    setLoading(false);
-  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    // Simple password check - you should use environment variables in production
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123';
-    
-    if (password === adminPassword) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('admin_auth', 'authenticated');
-    } else {
-      setError('Invalid password. Access denied.');
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+
+      if (res.ok) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem('admin_auth', 'authenticated');
+      } else {
+        setError('Invalid password. Access denied.');
+        setPassword('');
+      }
+    } catch {
+      setError('Authentication failed. Please try again.');
       setPassword('');
     }
   };
@@ -42,14 +42,6 @@ export default function AdminAuth({ children }: AdminAuthProps) {
     sessionStorage.removeItem('admin_auth');
     setPassword('');
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
 
   if (!isAuthenticated) {
     return (
@@ -71,6 +63,7 @@ export default function AdminAuth({ children }: AdminAuthProps) {
                 id="password"
                 name="password"
                 type="password"
+                autoComplete="current-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

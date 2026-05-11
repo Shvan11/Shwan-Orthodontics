@@ -16,7 +16,7 @@ export default function HTMLDirectionManager({ initialLocale }: { initialLocale:
     };
 
     setAttributes(initialLocale);
-  }, [initialLocale]); // Only runs once on initial load
+  }, [initialLocale]);
 
   // Handle changes in locale on client-side navigation
   useEffect(() => {

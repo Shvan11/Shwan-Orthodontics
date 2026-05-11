@@ -39,6 +39,7 @@ export default function AdminSupabasePage() {
 
   // Load initial data
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadData();
   }, [loadData]);
 
@@ -809,14 +810,15 @@ export default function AdminSupabasePage() {
                             <label className="block text-sm font-medium text-gray-600 mb-2">
                               Service Images (Auto-Detected)
                             </label>
-                            <div className="p-3 bg-gray-50 rounded border">
+                            <div className="p-3 bg-gray-50 rounded border border-gray-200">
                               <div className="mb-3">
                                 <div className="text-sm font-medium text-gray-700 mb-1">Main Image:</div>
                                 <div className="text-xs text-gray-600 mb-2">File: /images/service-{index}-main.jpg</div>
-                                <img 
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
                                   src={`/images/service-${index}-main.jpg`}
                                   alt="Service main"
-                                  className="w-32 h-24 object-cover rounded border"
+                                  className="w-32 h-24 object-cover rounded border border-gray-200"
                                   onError={(e) => {
                                     e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                                   }}
@@ -827,11 +829,12 @@ export default function AdminSupabasePage() {
                                 <div className="text-xs text-gray-600 mb-2">Files: service-{index}-detail-1.jpg, service-{index}-detail-2.jpg, etc.</div>
                                 <div className="grid grid-cols-3 gap-2">
                                   {[1, 2, 3].map(detailIndex => (
-                                    <img 
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
                                       key={detailIndex}
                                       src={`/images/service-${index}-detail-${detailIndex}.jpg`}
                                       alt={`Detail ${detailIndex}`}
-                                      className="w-20 h-16 object-cover rounded border"
+                                      className="w-20 h-16 object-cover rounded border border-gray-200"
                                       onError={(e) => {
                                         e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                                       }}
@@ -877,14 +880,15 @@ export default function AdminSupabasePage() {
                             <label className="block text-sm font-medium text-gray-600 mb-2">
                               صور الخدمة (كشف تلقائي)
                             </label>
-                            <div className="p-3 bg-gray-50 rounded border">
+                            <div className="p-3 bg-gray-50 rounded border border-gray-200">
                               <div className="mb-3">
                                 <div className="text-sm font-medium text-gray-700 mb-1">الصورة الرئيسية:</div>
                                 <div className="text-xs text-gray-600 mb-2">ملف: /images/service-{index}-main.jpg</div>
-                                <img 
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
                                   src={`/images/service-${index}-main.jpg`}
                                   alt="Service main"
-                                  className="w-32 h-24 object-cover rounded border"
+                                  className="w-32 h-24 object-cover rounded border border-gray-200"
                                   onError={(e) => {
                                     e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                                   }}
@@ -895,11 +899,12 @@ export default function AdminSupabasePage() {
                                 <div className="text-xs text-gray-600 mb-2">ملفات: service-{index}-detail-1.jpg, service-{index}-detail-2.jpg, إلخ.</div>
                                 <div className="grid grid-cols-3 gap-2">
                                   {[1, 2, 3].map(detailIndex => (
-                                    <img 
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img
                                       key={detailIndex}
                                       src={`/images/service-${index}-detail-${detailIndex}.jpg`}
                                       alt={`Detail ${detailIndex}`}
-                                      className="w-20 h-16 object-cover rounded border"
+                                      className="w-20 h-16 object-cover rounded border border-gray-200"
                                       onError={(e) => {
                                         e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                                       }}
@@ -1039,10 +1044,11 @@ export default function AdminSupabasePage() {
                           const imagePath = `/images/gallery/case${galleryCase.id}/${photoIndex === 0 ? 'before' : 'after'}-${photoIndex + 1}.jpg`;
                           return (
                             <div key={photoIndex} className="text-center">
-                              <img 
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
                                 src={imagePath}
                                 alt={photo.description}
-                                className="w-full h-32 object-cover rounded border mb-2"
+                                className="w-full h-32 object-cover rounded border border-gray-200 mb-2"
                                 onError={(e) => {
                                   e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
                                 }}

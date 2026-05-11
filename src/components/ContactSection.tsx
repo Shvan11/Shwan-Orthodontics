@@ -7,9 +7,8 @@
    
    interface ContactSectionProps {
      t: Dictionary;
-     isRTL: boolean;
    }
-   
+
    export default function ContactSection({ t }: ContactSectionProps) {
      return (
        <section id="contact" className="mt-12 mx-auto px-4 sm:px-6">

@@ -228,7 +228,7 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="w-full mt-4 mb-4 bg-gray-50 border rounded-lg shadow-md overflow-hidden"
+                className="w-full mt-4 mb-4 bg-gray-50 border border-gray-200 rounded-lg shadow-md overflow-hidden"
                 onAnimationComplete={() => setAnimationComplete(true)}
               >
                 <div className={`p-6 ${isRTL ? "text-right" : "text-left"}`}>
@@ -250,11 +250,10 @@ export default function ServicesSection({ t, isRTL }: ServicesSectionProps) {
                       >
                         <Image
                           src={imgSrc}
-                          alt={`${expandedService.title} detail ${
-                            imgIndex + 1
-                          }`}
+                          alt={`${expandedService.title} detail ${imgIndex + 1}`}
                           width={600}
                           height={400}
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
                           priority={imgIndex < 2}
                           loading={imgIndex < 2 ? "eager" : "lazy"}

@@ -20,8 +20,9 @@ const FAQToggle = ({ index, question, answer, isRTL = false }: FAQToggleProps) =
 
   return (
     <div className="border-b border-gray-300 py-5">
-      <button 
-        onClick={toggleFAQ} 
+      <button
+        id={`${faqId}-btn`}
+        onClick={toggleFAQ}
         className={`w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded flex ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}
         aria-expanded={isOpen}
         aria-controls={faqId}
@@ -38,6 +39,8 @@ const FAQToggle = ({ index, question, answer, isRTL = false }: FAQToggleProps) =
       </button>
       <div
         id={faqId}
+        role="region"
+        aria-labelledby={`${faqId}-btn`}
         className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
         aria-hidden={!isOpen}
       >
