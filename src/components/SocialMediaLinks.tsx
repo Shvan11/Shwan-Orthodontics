@@ -32,9 +32,9 @@ const SOCIAL_LINKS: SocialLink[] = [
   {
     name: 'TikTok',
     Icon: FaTiktok,
-    url: 'https://www.tiktok.com/@shwan.ortho',
+    url: 'https://www.tiktok.com/@shwan_orthodontics',
     iconClass: 'text-black hover:text-gray-800',
-    handle: 'Shwan.Ortho',
+    handle: 'shwan_orthodontics',
     appUrl: null,
   },
   {
