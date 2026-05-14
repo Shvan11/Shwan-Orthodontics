@@ -43,8 +43,8 @@ const NavLink = memo(
 );
 NavLink.displayName = "NavLink";
 
-const NavbarLogo = () => (
-  <Link href="/" className="flex items-center">
+const NavbarLogo = ({ locale }: { locale: string }) => (
+  <Link href={`/${locale}`} className="flex items-center">
     <div className="w-[120px] md:w-[150px]">
       <Image
         src={logo}
@@ -125,7 +125,7 @@ function Navbar() {
       <div className="container mx-auto">
         {/* Mobile layout */}
         <div className="flex justify-between items-center md:hidden">
-          <NavbarLogo />
+          <NavbarLogo locale={locale} />
           <div className="flex items-center">
             <div className="mr-4">
               <LanguageSwitcher />
@@ -158,7 +158,7 @@ function Navbar() {
 
         {/* Desktop layout */}
         <div className="hidden md:flex justify-between items-center">
-          <NavbarLogo />
+          <NavbarLogo locale={locale} />
           <div className="flex-1 flex justify-center">
             <div className="flex items-center">
               {navItems.map((item) => (

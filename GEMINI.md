@@ -1,6 +1,6 @@
-# CLAUDE.md
+# GEMINI.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides foundational mandates and guidance for Gemini CLI when working with code in this repository. These instructions take precedence over general workflows.
 
 ## Development Commands
 
@@ -107,7 +107,7 @@ npm run content
 - Mobile-first Tailwind classes with breakpoint prefixes
 - Test RTL layout when working on Arabic translations
 
-## SEO & Routing Best Practices
+## SEO & Routing Best Practices (Strict Adherence Required)
 
 - **Permanent Redirects**: Root path (`/`) MUST use a 308 permanent redirect to the default locale (`/en`). This is configured in `next.config.ts`.
 - **Absolute URLs**: All hreflang (`alternates.languages`) and canonical tags MUST use absolute URLs (e.g., `https://www.shwan-orthodontics.com/en`) in `src/app/[locale]/layout.tsx`.

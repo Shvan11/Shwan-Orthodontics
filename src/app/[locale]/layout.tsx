@@ -36,7 +36,11 @@ export async function generateMetadata({
     metadataBase: new URL(baseUrl),
     alternates: {
       canonical: `${baseUrl}/${locale}`,
-      languages: { en: '/en', ar: '/ar' },
+      languages: { 
+        en: `${baseUrl}/en`, 
+        ar: `${baseUrl}/ar`,
+        'x-default': `${baseUrl}/en`,
+      },
     },
     openGraph: {
       title: t.seo?.title || 'Shwan Orthodontics',

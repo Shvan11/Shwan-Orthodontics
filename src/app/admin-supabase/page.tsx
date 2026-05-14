@@ -536,7 +536,7 @@ export default function AdminSupabasePage() {
                 🔄 Refresh
               </button>
               <Link
-                href="/"
+                href="/en"
                 className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium"
               >
                 Back to Site
