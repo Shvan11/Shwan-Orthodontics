@@ -31,19 +31,15 @@ export default function LogoWatermark({
   
   // Determine size
   let width = 0;
-  let height = 0;
   switch (size) {
     case 'small':
       width = 60;
-      height = 60;
       break;
     case 'medium':
       width = 100;
-      height = 100;
       break;
     case 'large':
       width = 150;
-      height = 150;
       break;
   }
   
