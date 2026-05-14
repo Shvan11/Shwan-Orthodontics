@@ -34,6 +34,18 @@ export async function generateMetadata({
     creator: 'Shwan Orthodontics',
     publisher: 'Shwan Orthodontics',
     metadataBase: new URL(baseUrl),
+    
+    // Explicitly defining icons for Google Search and devices
+    icons: {
+      icon: [
+        { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+      ],
+      apple: [
+        { url: '/apple-icon.png' },
+      ],
+    },
+
+    // Fixed absolute URLs for strict SEO handling
     alternates: {
       canonical: `${baseUrl}/${locale}`,
       languages: { 
@@ -42,6 +54,7 @@ export async function generateMetadata({
         'x-default': `${baseUrl}/en`,
       },
     },
+    
     openGraph: {
       title: t.seo?.title || 'Shwan Orthodontics',
       description: t.seo?.description || 'Professional orthodontic care in Duhok, Iraq',
