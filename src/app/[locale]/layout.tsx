@@ -100,7 +100,7 @@ export default async function LocaleLayout({
               description: 'Professional orthodontic care in Duhok, Kurdistan Region, Iraq',
               url: 'https://www.shwan-orthodontics.com',
               telephone: '+964-750-810-8833',
-              email: 'shwan.elias@uod.ac',
+              email: 'info@shwan-orthodontics.com',
               address: {
                 '@type': 'PostalAddress',
                 streetAddress: 'KRO Street',
