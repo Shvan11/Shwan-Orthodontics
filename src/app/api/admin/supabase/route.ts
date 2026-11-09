@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ContentManager } from '../../../../../lib/supabase';
+import { saveContent } from '../../../../../lib/supabaseServer';
+import { requireAdmin } from '@/lib/adminSession';
 
 // GET - Read content from Supabase
 export async function GET(request: NextRequest) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const { searchParams } = new URL(request.url);
     const locale = searchParams.get('locale') as 'en' | 'ar';
@@ -37,6 +42,9 @@ export async function GET(request: NextRequest) {
 
 // POST - Write content to Supabase
 export async function POST(request: NextRequest) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { locale, section, data } = body;
@@ -63,7 +71,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save content to Supabase
-    const result = await ContentManager.saveContent(locale, section, data);
+    const result = await saveContent(locale, section, data);
     
     return NextResponse.json({ 
       success: true,
@@ -81,6 +89,9 @@ export async function POST(request: NextRequest) {
 
 // PUT - Save entire content structure (for bulk updates)
 export async function PUT(request: NextRequest) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { locale, data } = body;
@@ -101,18 +112,18 @@ export async function PUT(request: NextRequest) {
 
     // Save SEO data
     if (data.seo) {
-      await ContentManager.saveContent(locale, 'seo', data.seo);
+      await saveContent(locale, 'seo', data.seo);
     }
 
     // Save navbar data
     if (data.navbar) {
-      await ContentManager.saveContent(locale, 'navbar', data.navbar);
+      await saveContent(locale, 'navbar', data.navbar);
     }
 
     // Save pages data
     if (data.pages) {
       for (const [section, sectionData] of Object.entries(data.pages)) {
-        await ContentManager.saveContent(locale, section, sectionData as Record<string, unknown>);
+        await saveContent(locale, section, sectionData as Record<string, unknown>);
       }
     }
     

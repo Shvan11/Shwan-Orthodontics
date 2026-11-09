@@ -1,17 +1,57 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface AdminAuthProps {
   children: React.ReactNode;
 }
 
+const SESSION_EXPIRED_EVENT = 'admin-session-expired';
+
+/**
+ * fetch() for admin API calls. The httpOnly session cookie goes along
+ * automatically (same-origin). A 401 sends the admin back to the login screen;
+ * the caller still gets the response so it can stop what it was doing.
+ */
+export async function adminFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const res = await fetch(input, { ...init, credentials: 'same-origin' });
+  if (res.status === 401) {
+    window.dispatchEvent(new Event(SESSION_EXPIRED_EVENT));
+  }
+  return res;
+}
+
+type AuthStatus = 'checking' | 'authenticated' | 'anonymous';
+
 export default function AdminAuth({ children }: AdminAuthProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => sessionStorage.getItem('admin_auth') === 'authenticated'
-  );
+  const [status, setStatus] = useState<AuthStatus>('checking');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  // The cookie is httpOnly, so ask the server whether the session is valid.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/admin/auth', { credentials: 'same-origin', cache: 'no-store' })
+      .then((res) => (res.ok ? res.json() : { authenticated: false }))
+      .then((body: { authenticated?: boolean }) => {
+        if (!cancelled) setStatus(body.authenticated ? 'authenticated' : 'anonymous');
+      })
+      .catch(() => {
+        if (!cancelled) setStatus('anonymous');
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    const onExpired = () => {
+      setStatus('anonymous');
+      setError('Your session has expired. Log in again, then save your changes.');
+    };
+    window.addEventListener(SESSION_EXPIRED_EVENT, onExpired);
+    return () => window.removeEventListener(SESSION_EXPIRED_EVENT, onExpired);
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,29 +61,43 @@ export default function AdminAuth({ children }: AdminAuthProps) {
       const res = await fetch('/api/admin/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
         body: JSON.stringify({ password }),
       });
 
       if (res.ok) {
-        setIsAuthenticated(true);
-        sessionStorage.setItem('admin_auth', 'authenticated');
-      } else {
+        setStatus('authenticated');
+      } else if (res.status === 401) {
         setError('Invalid password. Access denied.');
-        setPassword('');
+      } else {
+        setError('Authentication failed. Please try again.');
       }
     } catch {
       setError('Authentication failed. Please try again.');
-      setPassword('');
     }
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    sessionStorage.removeItem('admin_auth');
     setPassword('');
   };
 
-  if (!isAuthenticated) {
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/auth', { method: 'DELETE', credentials: 'same-origin' });
+    } catch {
+      // The cookie expires on its own; show the login screen either way.
+    }
+    setStatus('anonymous');
+    setError('');
+    setPassword('');
+  };
+
+  if (status === 'checking') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-gray-600">Checking session...</div>
+      </div>
+    );
+  }
+
+  if (status !== 'authenticated') {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="max-w-md w-full space-y-8 p-8">
