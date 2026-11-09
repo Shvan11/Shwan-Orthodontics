@@ -61,12 +61,13 @@ CREATE TRIGGER update_gallery_images_updated_at BEFORE UPDATE ON gallery_images
 ALTER TABLE content ENABLE ROW LEVEL SECURITY;
 ALTER TABLE gallery_images ENABLE ROW LEVEL SECURITY;
 
--- RLS Policies (Allow all operations for now - you can restrict later)
-CREATE POLICY "Allow all operations on content" ON content
-  FOR ALL USING (true) WITH CHECK (true);
+-- RLS Policies: the anon key is public, so it may only read. Writes go through
+-- the server with the service-role key, which bypasses RLS (lib/supabaseServer.ts).
+CREATE POLICY "Public read access on content" ON content
+  FOR SELECT USING (true);
 
-CREATE POLICY "Allow all operations on gallery_images" ON gallery_images
-  FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Public read access on gallery_images" ON gallery_images
+  FOR SELECT USING (true);
 
 -- Create storage bucket for images
 INSERT INTO storage.buckets (id, name, public) 
@@ -76,15 +77,7 @@ ON CONFLICT (id) DO NOTHING;
 -- Storage policy for gallery images
 CREATE POLICY "Anyone can view gallery images" ON storage.objects
   FOR SELECT USING (bucket_id = 'gallery-images');
-
-CREATE POLICY "Anyone can upload gallery images" ON storage.objects
-  FOR INSERT WITH CHECK (bucket_id = 'gallery-images');
-
-CREATE POLICY "Anyone can update gallery images" ON storage.objects
-  FOR UPDATE USING (bucket_id = 'gallery-images');
-
-CREATE POLICY "Anyone can delete gallery images" ON storage.objects
-  FOR DELETE USING (bucket_id = 'gallery-images');
+-- No public upload/update/delete: manage files with the service-role key or the dashboard.
 
 -- Insert initial navbar content (same for both languages)
 INSERT INTO content (locale, section, data) VALUES 

@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Dictionary } from '@/types/dictionary';
 import { ContentManager, subscribeToContentChanges } from '../../../lib/supabase';
-import AdminAuth from '@/components/AdminAuth';
+import AdminAuth, { adminFetch } from '@/components/AdminAuth';
 
 export default function AdminSupabasePage() {
   const [enData, setEnData] = useState<Dictionary | null>(null);
@@ -69,18 +69,30 @@ export default function AdminSupabasePage() {
     
     setSaving(true);
     try {
-      await Promise.all([
-        fetch('/api/admin/supabase', {
+      const responses = await Promise.all([
+        adminFetch('/api/admin/supabase', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ locale: 'en', data: enData })
         }),
-        fetch('/api/admin/supabase', {
+        adminFetch('/api/admin/supabase', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ locale: 'ar', data: arData })
         })
       ]);
+
+      // adminFetch has already sent the admin back to the login screen; the
+      // unsaved edits stay in this component's state for after they log in.
+      if (responses.some((res) => res.status === 401)) {
+        setMessage('');
+        return;
+      }
+
+      const failed = responses.find((res) => !res.ok);
+      if (failed) {
+        throw new Error(`Save failed with status ${failed.status}`);
+      }
 
       setMessage('✅ Content saved to Supabase successfully! Changes are live!');
       setIsOnline(true);

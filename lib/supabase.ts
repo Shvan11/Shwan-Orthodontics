@@ -46,23 +46,7 @@ export class ContentManager {
     return data
   }
 
-  // Save content for a specific section
-  static async saveContent(locale: 'en' | 'ar', section: string, data: Record<string, unknown>) {
-    const { data: result, error } = await supabase
-      .from('content')
-      .upsert({
-        locale,
-        section,
-        data,
-        updated_at: new Date().toISOString()
-      }, {
-        onConflict: 'locale,section'
-      })
-      .select()
-
-    if (error) throw error
-    return result
-  }
+  // Writes live in lib/supabaseServer.ts (server-only, service-role key).
 
   // Get full content structure (like current JSON files)
   static async getFullContent(locale: 'en' | 'ar') {

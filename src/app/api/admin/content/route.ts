@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { requireAdmin } from '@/lib/adminSession';
 
 // GET - Read content files
 export async function GET(request: NextRequest) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const { searchParams } = new URL(request.url);
     const locale = searchParams.get('locale');
@@ -39,6 +43,9 @@ export async function GET(request: NextRequest) {
 
 // POST - Write content files
 export async function POST(request: NextRequest) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
+
   try {
     const body = await request.json();
     const { locale, data } = body;
